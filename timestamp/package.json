@@ -1,0 +1,22 @@
+{
+  "name": "timestamp",
+  "version": "1.0.0",
+  "description": "The source code for the Timestamp section for Stephen Mayeux's MERN course at Udemy.com.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StephenMayeux/MERN-at-Udemy.git"
+  },
+  "author": "Stephen Mayeux",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/StephenMayeux/MERN-at-Udemy/issues"
+  },
+  "homepage": "https://github.com/StephenMayeux/MERN-at-Udemy#readme",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}
