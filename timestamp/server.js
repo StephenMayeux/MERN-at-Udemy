@@ -1,6 +1,19 @@
+const path = require('path')
 const express = require('express')
 const moment = require('moment')
 const app = express()
+
+app.set('view engine', 'pug')
+app.set('views', path.join(__dirname, 'views'))
+
+app.use(express.static(path.join(__dirname, 'public')))
+
+app.get('/', (req, res) => {
+  res.render('index', {
+    natural: moment().format('MMMM DD, YYYY'),
+    unix: moment().format('x')
+  })
+})
 
 app.get('/:time', (req, res) => {
   const { time } = req.params
