@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "The source code for the Timestamp section for Stephen Mayeux's MERN course at Udemy.com.",
   "main": "server.js",
+  "engines": {
+    "npm": "3.10.10",
+    "node": "7.3.0"
+  },
   "scripts": {
     "start": "node server.js"
   },
