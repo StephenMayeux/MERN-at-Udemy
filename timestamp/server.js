@@ -10,6 +10,11 @@ app.get('/:time', (req, res) => {
       unix: time,
       natural: moment(parseInt(time, 10)).format('MMMM DD, YYYY')
     })
+  } else if (moment(time).isValid()) {
+    return res.send({
+      unix: moment(time).format('x'),
+      natural: time
+    })
   }
 
   res.send({ unix: null, natural: null })
