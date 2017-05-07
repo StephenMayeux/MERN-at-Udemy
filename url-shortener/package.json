@@ -1,0 +1,21 @@
+{
+  "name": "url-shortener",
+  "version": "1.0.0",
+  "description": "The source code for the URL Shortener Project from Stephen Mayeux's Udemy Course",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StephenMayeux/UdemyMERN.git"
+  },
+  "author": "Stephen Mayeux",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/StephenMayeux/UdemyMERN/issues"
+  },
+  "homepage": "https://github.com/StephenMayeux/UdemyMERN#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "mongoose": "^4.9.7",
+    "validator": "^7.0.0"
+  }
+}
