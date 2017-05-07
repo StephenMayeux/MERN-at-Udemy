@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/StephenMayeux/MERN-at-Udemy.git"
+    "url": "git+https://github.com/StephenMayeux/UdemyMERN.git"
   },
   "author": "Stephen Mayeux",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/StephenMayeux/MERN-at-Udemy/issues"
+    "url": "https://github.com/StephenMayeux/UdemyMERN/issues"
   },
-  "homepage": "https://github.com/StephenMayeux/MERN-at-Udemy#readme",
+  "homepage": "https://github.com/StephenMayeux/UdemyMERN#readme",
   "dependencies": {
     "express": "^4.15.2",
     "express-useragent": "^1.0.7"
