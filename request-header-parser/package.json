@@ -1,0 +1,23 @@
+{
+  "name": "request-header-parser",
+  "version": "1.0.0",
+  "description": "The source code for the Request Header Parser project for Stephen Mayeux's Udemy course",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StephenMayeux/MERN-at-Udemy.git"
+  },
+  "author": "Stephen Mayeux",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/StephenMayeux/MERN-at-Udemy/issues"
+  },
+  "homepage": "https://github.com/StephenMayeux/MERN-at-Udemy#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "express-useragent": "^1.0.7"
+  }
+}
