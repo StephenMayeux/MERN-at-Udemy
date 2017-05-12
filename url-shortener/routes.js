@@ -5,7 +5,7 @@ const shortid = require('shortid')
 module.exports = (app) => {
 
   app.get('/', (req, res) => {
-    res.send('Hey hey!')
+    res.render('index')
   })
 
   app.get('/goto/:short_id', (req, res) => {
@@ -19,7 +19,7 @@ module.exports = (app) => {
     })
   })
 
-  app.get('/*?', (req, res) => {
+  app.get('/create/*?', (req, res) => {
     const url = req.params[0]
     if (validator.isURL(url)) {
       Url.findOne({ original_url: url }, (err, result) => {
