@@ -1,0 +1,17 @@
+html, body {
+  margin: 25px 15px;
+}
+
+.list {
+  border-left: darkgrey solid 5px;
+}
+
+code {
+  padding: 0 6px;
+  border-radius: 4px;
+  background-color: inherit;
+}
+
+h2 {
+  margin-left: 20px;
+}
