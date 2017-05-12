@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "The source code for the URL Shortener Project from Stephen Mayeux's Udemy Course",
   "main": "server.js",
+  "engines": {
+    "npm": "3.10.10",
+    "node": "7.3.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/StephenMayeux/UdemyMERN.git"
