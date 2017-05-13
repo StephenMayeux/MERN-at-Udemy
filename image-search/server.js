@@ -1,7 +1,11 @@
+require('dotenv').config()
 const path = require('path')
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
+
+const routes = require('./routes')
+routes(app)
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/image-search')
 
