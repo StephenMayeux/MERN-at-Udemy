@@ -13,6 +13,9 @@ module.exports = (app) => {
       if (err) return res.send({ success: false, msg: 'Error writing to server' })
       client.search(term, options)
         .then(images => {
+          images = images.map(({ url, description, parentPage }) => {
+            return { url, description, parentPage }
+          })
           res.send({ success: true, images })
         }).
         catch(error => {
