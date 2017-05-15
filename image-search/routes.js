@@ -16,9 +16,12 @@ module.exports = (app) => {
           images = images.map(({ url, description, parentPage }) => {
             return { url, description, parentPage }
           })
+          if (req.query.view === '1') {
+            return res.render('search', { images })
+          }
           res.send({ success: true, images })
-        }).
-        catch(error => {
+        })
+        .catch(error => {
           res.send({ success: false, error })
         })
     })
@@ -27,6 +30,9 @@ module.exports = (app) => {
   app.get('/latest', (req, res) => {
     Search.find({}).sort({ createdAt: -1 }).limit(10).exec((err, searches) => {
       if (err) return res.send({ success: false, msg: 'Error reading search history' })
+      if (req.query.view === '1') {
+        return res.render('latest', { searches })
+      }
       res.send({ success: true, searches })
     })
   })
