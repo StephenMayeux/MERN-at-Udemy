@@ -17,7 +17,7 @@ module.exports = (app) => {
             return { url, description, parentPage }
           })
           if (req.query.view === '1') {
-            return res.render('search', { images })
+            return res.render('search', { images, term })
           }
           res.send({ success: true, images })
         })

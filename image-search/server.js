@@ -3,12 +3,14 @@ const path = require('path')
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
+const engine = require('ejs-mate')
 
 const routes = require('./routes')
 routes(app)
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/image-search')
 
+app.engine('ejs', engine)
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 app.use(express.static(path.join(__dirname, 'public')))
