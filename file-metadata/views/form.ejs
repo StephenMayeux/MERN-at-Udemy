@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>File Metadata Service</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h1>Upload a file</h1>
+          <% if (fileSize) { %>
+            <p>The file is <%= fileSize %> bytes in size</p>
+          <% } %>
+          <form action="/upload" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+              <label for="uploadFile">File to Upload</label>
+              <input type="file" name="file" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Upload File</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
