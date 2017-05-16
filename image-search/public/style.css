@@ -1,0 +1,7 @@
+.thumbnail {
+  height: 320px !important;
+}
+
+.thumbnail > img {
+  height: 200px !important;
+}
