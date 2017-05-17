@@ -1,0 +1,17 @@
+{
+  "name": "voting-app-server",
+  "version": "1.0.0",
+  "description": "RESTful API server for voting app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Stephen Mayeux",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.2",
+    "mongoose": "^4.9.9"
+  }
+}
