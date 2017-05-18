@@ -28,3 +28,26 @@ exports.fetchOnePoll = (req, res) => {
     })
   })
 }
+
+exports.createNewPoll = (req, res) => {
+  const { title, createdBy, options } = req.body
+  const results = options.reduce((acc, option) => {
+    acc[option] = 0
+    return acc
+  }, {})
+
+  const newPoll = new Poll({
+    title,
+    createdBy,
+    results,
+    votedBy: []
+  })
+
+  newPoll.save(err => {
+    if (err) return res.send({ success: false, msg: 'Error saving to db' })
+    res.send({
+      success: true,
+      poll: newPoll
+    })
+  })
+}
