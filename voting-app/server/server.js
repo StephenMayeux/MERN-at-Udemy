@@ -7,7 +7,7 @@ const express = require('express')
 const app = express()
 
 const routes = require('./routes')
-routes(app)
+app.use('/', routes)
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/voting-app')
 
