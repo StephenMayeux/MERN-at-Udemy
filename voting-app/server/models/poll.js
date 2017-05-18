@@ -4,7 +4,8 @@ const Schema = mongoose.Schema
 const pollSchema = new Schema({
   title: String,
   createdBy: String,
-  votes: Array
+  votedBy: Array,
+  results: Object
 }, { timestamps: true })
 
 const ModelClass = mongoose.model('poll', pollSchema)
