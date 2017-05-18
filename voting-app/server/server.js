@@ -12,7 +12,7 @@ routes(app)
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/voting-app')
 
 app.use(cors())
-app.use(logger('combine'))
+app.use(logger('combined'))
 app.use(bodyParser.json('*/*'))
 
 const port = process.env.PORT || 3000
