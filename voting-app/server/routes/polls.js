@@ -1,8 +1,7 @@
 const express = require('express')
 const router = express.Router()
+const PollController = require('../controllers/polls')
 
-router.get('/', (req, res) => {
-  res.send({ success: true, msg: 'Success in poll router' })
-})
+router.get('/', PollController.home)
 
 module.exports = router
