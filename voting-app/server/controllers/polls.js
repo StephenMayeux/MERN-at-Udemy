@@ -1,6 +1,7 @@
 const Polls = require('../models/poll')
 
 exports.home = (req, res) => {
+  console.log('the user', req.user)
   res.send({ success: true, msg: 'Success in poll router' })
 }
 
@@ -30,6 +31,7 @@ exports.fetchOnePoll = (req, res) => {
 }
 
 exports.createNewPoll = (req, res) => {
+  console.log('the user', req.user)
   const { title, createdBy, options } = req.body
   const results = options.reduce((acc, option) => {
     acc[option] = 0

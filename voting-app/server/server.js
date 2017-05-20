@@ -7,10 +7,7 @@ const jwt = require('express-jwt')
 const express = require('express')
 
 const app = express()
-const jwtCheck = jwt({
-  secret: new Buffer(process.env.APP_SECRET, 'base64'),
-  audience: process.env.APP_ID
-})
+const jwtCheck = jwt({ secret: process.env.APP_SECRET })
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/voting-app')
 
