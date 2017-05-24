@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './style.css';
 
 class App extends Component {
   render() {
+    const logo = `${process.env.PUBLIC_URL}/logo.svg`;
     return (
       <div className="App">
         <div className="App-header">
