@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import reduxThunk from 'redux-thunk';
 import logger from 'redux-logger';
 
@@ -14,6 +15,8 @@ const store = createStoreWithMiddleware(reducers,
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router history={browserHistory}>
+      <Route path="/" component={App} />
+    </Router>
   </Provider>
   , document.getElementById('root'));
