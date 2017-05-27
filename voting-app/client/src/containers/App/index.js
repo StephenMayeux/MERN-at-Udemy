@@ -1,3 +1,5 @@
+// Because of stupid reasons:
+// eslint-disable-next-line
 import React, { Component } from 'react';
 import './style.css';
 
