@@ -7,6 +7,8 @@ import reduxThunk from 'redux-thunk';
 import logger from 'redux-logger';
 
 import App from './containers/App';
+import Home from './components/LandingPage'
+
 import reducers from './reducers';
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk, logger)(createStore);
@@ -16,7 +18,9 @@ const store = createStoreWithMiddleware(reducers,
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/" component={App} />
+      <Route path="/" component={App}>
+        <IndexRoute component={Home} />
+      </Route>
     </Router>
   </Provider>
   , document.getElementById('root'));
