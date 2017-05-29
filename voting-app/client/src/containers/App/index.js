@@ -3,9 +3,16 @@
 import React, { Component } from 'react';
 import './style.css';
 
+import Header from '../../components/Header'
+
 class App extends Component {
   render() {
-    return this.props.children;
+    return (
+      <div>
+        <Header />
+        {this.props.children}
+      </div>
+    );
   }
 }
 
