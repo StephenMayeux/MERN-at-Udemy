@@ -8,6 +8,7 @@ import logger from 'redux-logger';
 
 import App from './containers/App';
 import Home from './components/LandingPage'
+import PollList from './components/PollList'
 
 import reducers from './reducers';
 
@@ -20,6 +21,7 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Route path="/" component={App}>
         <IndexRoute component={Home} />
+        <Route path ="/vote" component={PollList} />
       </Route>
     </Router>
   </Provider>
