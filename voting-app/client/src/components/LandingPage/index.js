@@ -1,4 +1,5 @@
 import React from 'react'
+import { browserHistory } from 'react-router'
 import {
   ButtonToolbar,
   Button,
@@ -17,8 +18,15 @@ const LandingPage = () => {
             <h1>Voting App</h1>
             <p>Anybody can vote, but you have to register to create polls.</p>
             <ButtonToolbar>
-              <Button bsStyle="primary">Sign In Account</Button>
-              <Button bsStyle="default">Vote Anyway</Button>
+              <Button bsStyle="primary">
+                Sign In Account
+              </Button>
+              <Button
+                bsStyle="default"
+                onClick={() => browserHistory.push('vote')}
+              >
+                Vote Anyway
+              </Button>
             </ButtonToolbar>
           </Jumbotron>
         </Col>
