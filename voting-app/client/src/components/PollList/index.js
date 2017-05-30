@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router'
+import { browserHistory } from 'react-router'
 import {
   ListGroup,
   ListGroupItem,
@@ -7,6 +7,7 @@ import {
  } from 'react-bootstrap'
 import _ from 'lodash'
 import axios from 'axios'
+import './style.css'
 
 const baseURL = 'http://localhost:3000'
 
@@ -43,7 +44,11 @@ export default class PollList extends Component {
   renderListItems() {
     return this.state.polls.map(({ title, createdBy, _id }) => {
       return (
-        <ListGroupItem key={_id}>
+        <ListGroupItem
+          key={_id}
+          className="pollItem"
+          onClick={() => browserHistory.push(`vote/${_id}`)}
+        >
           {`${title} -- ${createdBy}`}
         </ListGroupItem>
       )
