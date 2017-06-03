@@ -14,7 +14,10 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/voting-app')
 app.use(cors())
 app.use(logger('combined'))
 app.use(bodyParser.json({ type: '*/*' }))
-app.use(jwtCheck.unless({ method: 'GET' }))
+app.use(jwtCheck.unless({
+  method: 'GET',
+  path: /^\/polls\/vote\/[A-Za-z0-9-_]*/ 
+}))
 
 const routes = require('./routes')
 app.use('/', routes)

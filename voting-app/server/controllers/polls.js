@@ -12,17 +12,10 @@ exports.fetchAllPolls = (req, res) => {
   })
 }
 
-exports.fetchUserPolls = (req, res) => {
-  Polls.find({ createdBy: req.params.id }, (err, polls) => {
-    if (err) return res.send({ success: false, msg: 'Error reading from database' })
-    res.send({ success: true, polls })
-  })
-}
-
 exports.fetchOnePoll = (req, res) => {
-  Polls.findOneById(req.params.id, (err, poll) => {
+  Polls.findById(req.params.id, (err, poll) => {
     if (err) return res.send({ success: false, msg: 'Error reading from database' })
-    if (!poll) return res.send({ success: false, msg: 'This poll does not exist' })
+    if (!poll) return res.send({ success: false, msg: 'This poll does not exist', poll: null })
     res.send({
       success: true,
       poll
