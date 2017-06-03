@@ -7,8 +7,8 @@ import {
 } from 'react-bootstrap'
 import './style.css'
 
-const displayButtons = (loggedIn) => {
-  if (loggedIn) {
+const displayButtons = (auth) => {
+  if (auth.loggedIn()) {
     return (
       <Nav pullRight>
         <NavItem eventKey={1}>
@@ -32,7 +32,7 @@ const displayButtons = (loggedIn) => {
         <Link className="link" to="/vote">See Polls</Link>
       </NavItem>
       <NavItem eventKey={2}>
-        <Link className="link" to="/login">Sign In</Link>
+        <Link className="link" onClick={auth.login.bind(this)}>Sign In</Link>
       </NavItem>
     </Nav>
   )
@@ -48,7 +48,7 @@ const Header = (props) => {
         <Navbar.Toggle />
       </Navbar.Header>
       <Navbar.Collapse>
-        {displayButtons(props.auth.loggedIn())}
+        {displayButtons(props.auth)}
       </Navbar.Collapse>
     </Navbar>
   );
