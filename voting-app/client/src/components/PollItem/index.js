@@ -11,6 +11,7 @@ import {
 } from 'react-bootstrap'
 import _ from 'lodash'
 import axios from 'axios'
+import { BarChart, Bar, XAxis, YAxis } from 'recharts'
 
 const baseURL = 'http://localhost:3000'
 
@@ -60,7 +61,7 @@ export default class PollItem extends Component {
     if (!votedBy.includes(this.state.ip)) {
       axios.post(`${baseURL}/polls/vote/${_id}`, { voter: this.state.ip, vote: this.state.selectedOption })
         .then(({ data }) => {
-          this.setState({ poll: data.poll })
+          this.setState({ poll: data.poll, selectedOption: null })
         })
         .catch(error => {
           console.error('Error fetching single poll', error)
@@ -80,12 +81,38 @@ export default class PollItem extends Component {
           key={option}
           name="vote"
           value={option}
+          checked={option === this.state.selectedOption}
           onChange={(e) => this.setState({ selectedOption: e.target.value })}
         >
           {option}
         </Radio>
       )
     })
+  }
+
+  renderChart() {
+    const { results } = this.state.poll
+    const totalVotes = _.reduce(results, (acc, num, key) => {
+      return acc + num
+    }, 0)
+
+    if (totalVotes) {
+      const data = _.map(results, (num, option) => {
+        return { option, num }
+      })
+      return (
+        <BarChart width={730} height={250} data={data}>
+          <XAxis dataKey="option" />
+          <YAxis />
+          <Bar dataKey="num" fill="#8884d8" />
+        </BarChart>
+      )
+    }
+    else {
+      return (
+        <h1>No Votes Yet</h1>
+      )
+    }
   }
 
   render() {
@@ -104,6 +131,9 @@ export default class PollItem extends Component {
                 <Button type="submit">Vote!</Button>
               </form>
             </Panel>
+          </Col>
+          <Col xs={6}>
+            {this.renderChart()}
           </Col>
         </Row>
         <Modal show={this.state.showAlertModal} onHide={this.closeModal}>
