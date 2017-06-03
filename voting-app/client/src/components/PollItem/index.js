@@ -103,7 +103,7 @@ export default class PollItem extends Component {
       return (
         <BarChart width={730} height={250} data={data}>
           <XAxis dataKey="option" />
-          <YAxis />
+          <YAxis allowDecimals={false} />
           <Bar dataKey="num" fill="#8884d8" />
         </BarChart>
       )
