@@ -21,7 +21,7 @@ const displayButtons = (auth) => {
           <Link className="link" to="/create">Create Polls</Link>
         </NavItem>
         <NavItem eventKey={4}>
-          <Link className="link" to="/logout">Logout</Link>
+          <Link className="link" onClick={auth.logout.bind(this)}>Logout</Link>
         </NavItem>
       </Nav>
     )

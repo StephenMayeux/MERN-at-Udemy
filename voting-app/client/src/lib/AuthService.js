@@ -14,7 +14,7 @@ export default class AuthService {
   }
 
   _doAuthentication(authResult) {
-    this.setToken(authResult.idToken)
+    this.setToken(authResult)
     browserHistory.push('/vote')
   }
 
@@ -26,15 +26,22 @@ export default class AuthService {
     return !!this.getToken()
   }
 
-  setToken(idToken) {
+  setToken({ idToken, idTokenPayload}) {
     localStorage.setItem('id_token', idToken)
+    localStorage.setItem('username', idTokenPayload.sub)
   }
 
   getToken() {
     return localStorage.getItem('id_token')
   }
 
+  getUsername() {
+    return localStorage.getItem('username')
+  }
+
   logout() {
-    localStorage.removeItem('id_token');
+    localStorage.removeItem('id_token')
+    localStorage.removeItem('username')
+    browserHistory.push('/')
   }
 }
