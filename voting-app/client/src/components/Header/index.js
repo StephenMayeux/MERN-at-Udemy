@@ -7,6 +7,37 @@ import {
 } from 'react-bootstrap'
 import './style.css'
 
+const displayButtons = (loggedIn) => {
+  if (loggedIn) {
+    return (
+      <Nav pullRight>
+        <NavItem eventKey={1}>
+          <Link className="link" to="/vote">See Polls</Link>
+        </NavItem>
+        <NavItem eventKey={2}>
+          <Link className="link" to="/mypolls">My Polls</Link>
+        </NavItem>
+        <NavItem eventKey={3}>
+          <Link className="link" to="/create">Create Polls</Link>
+        </NavItem>
+        <NavItem eventKey={4}>
+          <Link className="link" to="/logout">Logout</Link>
+        </NavItem>
+      </Nav>
+    )
+  }
+  return (
+    <Nav pullRight>
+      <NavItem eventKey={1}>
+        <Link className="link" to="/vote">See Polls</Link>
+      </NavItem>
+      <NavItem eventKey={2}>
+        <Link className="link" to="/login">Sign In</Link>
+      </NavItem>
+    </Nav>
+  )
+}
+
 const Header = (props) => {
   return (
     <Navbar collapseOnSelect>
@@ -17,14 +48,7 @@ const Header = (props) => {
         <Navbar.Toggle />
       </Navbar.Header>
       <Navbar.Collapse>
-        <Nav pullRight>
-          <NavItem eventKey={1}>
-            <Link className="link" to="/vote">See Polls</Link>
-          </NavItem>
-          <NavItem eventKey={2}>
-            <Link className="link" to="/signin">Sign In</Link>
-          </NavItem>
-        </Nav>
+        {displayButtons(props.auth.loggedIn())}
       </Navbar.Collapse>
     </Navbar>
   );

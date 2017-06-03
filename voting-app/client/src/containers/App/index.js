@@ -9,7 +9,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Header />
+        <Header auth={this.props.route.auth} />
         {this.props.children}
       </div>
     );
