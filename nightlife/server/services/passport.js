@@ -18,7 +18,6 @@ module.exports = (passport) => {
     consumerSecret: process.env.CONSUMER_SECRET,
     callbackURL: process.env.CALLBACK
   }, (token, tokenSecret, profile, done) => {
-    console.log('TYPEOF PROFILE ID', typeof profile.id)
     User.findOne({ twitter_id: profile.id }, (err, user) => {
       if (err) return done(err)
       if (user) return done(null, user)
