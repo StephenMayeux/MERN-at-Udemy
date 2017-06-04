@@ -56,15 +56,19 @@ export default class PollItem extends Component {
 
   handleSubmit(e) {
     e.preventDefault()
-    const { _id, votedBy } = this.state.poll
 
-    if (!votedBy.includes(this.state.ip)) {
-      axios.post(`${baseURL}/polls/vote/${_id}`, { voter: this.state.ip, vote: this.state.selectedOption })
+    const { _id, votedBy } = this.state.poll
+    const voter = this.props.route.auth.getUsername()
+      ? this.props.route.auth.getUsername()
+      : this.state.ip
+
+    if (!votedBy.includes(voter)) {
+      axios.post(`${baseURL}/polls/vote/${_id}`, { voter, vote: this.state.selectedOption })
         .then(({ data }) => {
           this.setState({ poll: data.poll, selectedOption: null })
         })
         .catch(error => {
-          console.error('Error fetching single poll', error)
+          console.error('Error posting a vote to single poll', error)
         })
     }
     else {
@@ -141,7 +145,7 @@ export default class PollItem extends Component {
             <Modal.Title>Already Voted!</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p>This ip address has already voted on this poll.</p>
+            <p>This ip or username has already voted on this poll.</p>
           </Modal.Body>
         </Modal>
       </Grid>

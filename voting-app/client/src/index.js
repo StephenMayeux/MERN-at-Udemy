@@ -34,13 +34,8 @@ ReactDOM.render(
       <Route path="/" component={App} auth={auth}>
         <IndexRoute component={Home} />
         <Route path="/vote" component={PollList} />
-        <Route path="/vote/:id" component={PollItem} />
-        <Route path="/create"
-          component={CreatePollItem}
-          onEnter={requireAuth}
-          username={auth.getUsername()}
-          idToken={auth.getToken()} 
-        />
+        <Route path="/vote/:id" component={PollItem} auth={auth} />
+        <Route path="/create" component={CreatePollItem} onEnter={requireAuth} auth={auth} />
       </Route>
     </Router>
   </Provider>

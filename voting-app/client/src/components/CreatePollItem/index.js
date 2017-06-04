@@ -33,10 +33,9 @@ export default class CreatePollItem extends Component {
 
   handleSubmit(e) {
     e.preventDefault()
-    console.log('and these are my props here', this.props)
-    e.preventDefault()
 
-    const { username, idToken } = this.props.route
+    const username = this.props.route.auth.getUsername()
+    const idToken = this.props.route.auth.getToken()
     const config = { headers: { 'Authorization': `Bearer ${idToken}` } }
     const createdBy = username
 
@@ -59,7 +58,6 @@ export default class CreatePollItem extends Component {
   }
 
   render() {
-    console.log('these are my props in render', this.props)
     return (
       <Grid>
         <Row>

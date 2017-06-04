@@ -42,14 +42,14 @@ export default class PollList extends Component {
   }
 
   renderListItems() {
-    return this.state.polls.map(({ title, createdBy, _id }) => {
+    return this.state.polls.map(({ title, _id }) => {
       return (
         <ListGroupItem
           key={_id}
           className="pollItem"
           onClick={() => browserHistory.push(`vote/${_id}`)}
         >
-          {`${title} -- ${createdBy}`}
+          {`${title}`}
         </ListGroupItem>
       )
     })
