@@ -13,12 +13,8 @@
     "react": "^15.5.4",
     "react-bootstrap": "^0.31.0",
     "react-dom": "^15.5.4",
-    "react-redux": "^5.0.5",
     "react-router": "2.8.1",
-    "recharts": "^1.0.0-alpha.0",
-    "redux": "^3.6.0",
-    "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.2.0"
+    "recharts": "^1.0.0-alpha.0"
   },
   "devDependencies": {
     "react-scripts": "1.0.3"
