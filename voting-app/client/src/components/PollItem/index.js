@@ -6,6 +6,7 @@ import {
   Panel,
   FormGroup,
   Radio,
+  ButtonToolbar,
   Button,
   Modal
 } from 'react-bootstrap'
@@ -24,14 +25,28 @@ export default class PollItem extends Component {
       hasLoaded: false,
       selectedOption: null,
       showAlertModal: false,
-      ip_address: ''
+      showAddOptionModal: false,
+      ip_address: '',
+      newOption: ''
     }
 
     this.closeModal = this.closeModal.bind(this)
+    this.showAddOptionModal = this.showAddOptionModal.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleNewOption = this.handleNewOption.bind(this)
+  }
+
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value })
   }
 
   closeModal() {
-    this.setState({ showAlertModal: false })
+    this.setState({ showAlertModal: false, showAddOptionModal: false })
+  }
+
+  showAddOptionModal() {
+    this.setState({ showAddOptionModal: true })
   }
 
   componentWillMount() {
@@ -75,6 +90,25 @@ export default class PollItem extends Component {
       this.setState({ showAlertModal: true })
     }
 
+  }
+
+  handleNewOption(e) {
+    e.preventDefault()
+
+    const { poll, newOption } = this.state
+    const body = { option: newOption }
+    const config = { headers: { 'Authorization': `Bearer ${this.props.route.auth.getToken()}` } }
+    axios.put(`${baseURL}/polls/edit/${poll._id}`, body, config)
+      .then(({ data }) => {
+        this.setState({
+          poll: data.poll,
+          showAddOptionModal: false,
+          newOption: ''
+        })
+      })
+      .catch(error => {
+        console.error('Error posting a vote to single poll', error)
+      })
   }
 
   renderPollOptions() {
@@ -128,11 +162,17 @@ export default class PollItem extends Component {
         <Row>
           <Col xs={6}>
             <Panel header={poll.title} bsStyle="primary">
-              <form onSubmit={this.handleSubmit.bind(this)}>
+              <form onSubmit={this.handleSubmit}>
                 <FormGroup>
                   {this.renderPollOptions()}
                 </FormGroup>
-                <Button type="submit">Vote!</Button>
+                <ButtonToolbar>
+                  <Button className="btn btn-primary" type="submit">Vote!</Button>
+                  {this.props.route.auth.loggedIn()
+                    ? <Button onClick={this.showAddOptionModal} className="btn btn-default">Add an Option</Button>
+                    : null
+                  }
+                </ButtonToolbar>
               </form>
             </Panel>
           </Col>
@@ -146,6 +186,23 @@ export default class PollItem extends Component {
           </Modal.Header>
           <Modal.Body>
             <p>This ip or username has already voted on this poll.</p>
+          </Modal.Body>
+        </Modal>
+        <Modal show={this.state.showAddOptionModal} onHide={this.closeModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Add an Option</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>Add an option below</p>
+            <form onSubmit={this.handleNewOption}>
+              <input
+                type="text"
+                value={this.state.newOption}
+                name="newOption"
+                onChange={this.handleChange}
+              />
+              <Button type="submit" className="btn btn-primary">Add Option</Button>
+            </form>
           </Modal.Body>
         </Modal>
       </Grid>
