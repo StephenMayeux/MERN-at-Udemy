@@ -13,6 +13,7 @@ import Home from './components/LandingPage'
 import PollList from './components/PollList'
 import PollItem from './components/PollItem'
 import CreatePollItem from './components/CreatePollItem'
+import MyPolls from './components/MyPolls'
 
 import reducers from './reducers';
 
@@ -36,6 +37,7 @@ ReactDOM.render(
         <Route path="/vote" component={PollList} />
         <Route path="/vote/:id" component={PollItem} auth={auth} />
         <Route path="/create" component={CreatePollItem} onEnter={requireAuth} auth={auth} />
+        <Route path="/mypolls" component={MyPolls} onEnter={requireAuth} auth={auth} />
       </Route>
     </Router>
   </Provider>
