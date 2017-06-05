@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux'
 import {
   Button,
   Form,
@@ -7,14 +8,30 @@ import {
   FormControl
 } from 'react-bootstrap'
 
+import { actionCreators } from '../../actions'
 import './style.css';
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleChange(e) {
+    this.props.actions.updateSearchTerm(e.target.value)
+  }
+
   renderForm() {
     return (
       <Form className="form-inline form-container">
         <FormGroup className="search-bar">
-          <FormControl type="text" placeholder="Austin, TX" />
+          <FormControl
+            type="text"
+            placeholder="Austin, TX"
+            onChange={this.handleChange}
+            value={this.props.search}
+          />
         </FormGroup>
         <Button bsStyle="primary">Search</Button>
       </Form>
@@ -40,8 +57,12 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = ({ messages }) => {
-  return { messages }
+const mapStateToProps = ({ search }) => {
+  return { search }
 }
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch) => {
+  return { actions: bindActionCreators(actionCreators, dispatch) }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
