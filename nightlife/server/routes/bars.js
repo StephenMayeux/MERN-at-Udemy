@@ -8,5 +8,6 @@ const authRequired = (req, res, next) => {
 }
 
 router.get('/search/:location', BarsController.searchForBars)
+router.post('/visit/:id', BarsController.toggleVisit)
 
 module.exports = router
