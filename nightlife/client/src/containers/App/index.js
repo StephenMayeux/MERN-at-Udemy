@@ -2,11 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import {
+  Grid,
+  Row,
   Button,
   Form,
   FormGroup,
   FormControl
 } from 'react-bootstrap'
+import _ from 'lodash'
+
+import BarCard from '../../components/BarCard'
 
 import { actionCreators } from '../../actions'
 import './style.css';
@@ -44,6 +49,12 @@ class App extends Component {
     )
   }
 
+  renderBars() {
+    const { bars, actions } = this.props
+    if (_.isEmpty(bars)) return null
+    return _.map(bars, (bar, i) => <BarCard key={bar.id} {...bar} actions={actions} />)
+  }
+
   render() {
     return (
       <div className="app">
@@ -58,13 +69,18 @@ class App extends Component {
           To get started, use the search form below.
           {this.renderForm()}
         </p>
+        <Grid>
+          <Row>
+            {this.renderBars()}
+          </Row>
+        </Grid>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ search }) => {
-  return { search }
+const mapStateToProps = ({ search, bars }) => {
+  return { search, bars }
 }
 
 const mapDispatchToProps = (dispatch) => {
