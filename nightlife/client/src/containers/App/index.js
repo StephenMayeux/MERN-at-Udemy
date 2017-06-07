@@ -16,6 +16,12 @@ class App extends Component {
     super(props)
 
     this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  handleSubmit(e) {
+    e.preventDefault()
+    this.props.actions.barSeachResults(this.props.search)
   }
 
   handleChange(e) {
@@ -24,7 +30,7 @@ class App extends Component {
 
   renderForm() {
     return (
-      <Form className="form-inline form-container">
+      <Form onSubmit={this.handleSubmit} className="form-inline form-container">
         <FormGroup className="search-bar">
           <FormControl
             type="text"
