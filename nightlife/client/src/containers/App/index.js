@@ -7,7 +7,8 @@ import {
   Button,
   Form,
   FormGroup,
-  FormControl
+  FormControl,
+  Modal
 } from 'react-bootstrap'
 import _ from 'lodash'
 
@@ -62,7 +63,7 @@ class App extends Component {
           <h2>Welcome to Nightlife</h2>
           <p className="lead">Search for bars and tell your friends</p>
           <Button bsStyle="primary">
-            Sign In with Twitter
+            Sign In or Sign Up
           </Button>
         </div>
         <p className="intro">
@@ -74,6 +75,11 @@ class App extends Component {
             {this.renderBars()}
           </Row>
         </Grid>
+        <Modal show={false}>
+          <Modal.Header closeButton onHide={() => 'stuff'}>
+            
+          </Modal.Header>
+        </Modal>
       </div>
     );
   }
