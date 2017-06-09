@@ -109,6 +109,7 @@ class App extends Component {
                 handleEmailChange={this.handleEmailChange}
                 handlePasswordChange={this.handlePasswordChange}
                 auth={this.props.auth}
+                error={this.props.uiState.authErrorMessage}
               />
             : null
         }

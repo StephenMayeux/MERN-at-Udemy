@@ -31,11 +31,26 @@ const handleSignIn = ({ emailForm, passwordForm }) => {
   return (dispatch) => {
     axios.post(`${BASE_URL}/signin`, { email: emailForm, password: passwordForm })
       .then(({ data }) => {
-        const { token, user } = data
-        localStorage.setItem('token', token)
-        return dispatch({
-          type: SIGN_IN_SUCCESS,
-          payload: { token, user }
+        if (data.success) {
+          const { token, user } = data
+          localStorage.setItem('token', token)
+          dispatch({
+            type: SIGN_IN_SUCCESS,
+            payload: { token, user }
+          })
+        }
+        else {
+          dispatch({
+            type: SIGN_IN_FAILURE,
+            payload: data.error
+          })
+        }
+      })
+      .catch(error => {
+        console.log(error)
+        dispatch({
+          type: SIGN_IN_FAILURE,
+          payload: 'You must include an email and/or password'
         })
       })
   }

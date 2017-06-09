@@ -10,13 +10,16 @@ import {
 } from 'react-bootstrap'
 
 const AuthModal = (props) => {
+
   const {
     onHide,
     onSubmit,
     handleEmailChange,
     handlePasswordChange,
-    auth
+    auth,
+    error
   } = props
+
   return (
     <Modal show={true}>
       <Modal.Header closeButton onHide={onHide}>
@@ -59,6 +62,7 @@ const AuthModal = (props) => {
             </Col>
           </FormGroup>
         </Form>
+        <p style={{ color: 'red' }}>{error}</p>
       </Modal.Body>
     </Modal>
   )
