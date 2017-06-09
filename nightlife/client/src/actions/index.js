@@ -25,7 +25,8 @@ const barSeachResults = (location) => {
   }
 }
 
-export const HANDLE_SIGN_IN = 'HANDLE_SIGN_IN'
+export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS'
+export const SIGN_IN_FAILURE = 'SIGN_IN_FAILURE'
 const handleSignIn = ({ emailForm, passwordForm }) => {
   return (dispatch) => {
     axios.post(`${BASE_URL}/signin`, { email: emailForm, password: passwordForm })
@@ -33,7 +34,7 @@ const handleSignIn = ({ emailForm, passwordForm }) => {
         const { token, user } = data
         localStorage.setItem('token', token)
         return dispatch({
-          type: HANDLE_SIGN_IN,
+          type: SIGN_IN_SUCCESS,
           payload: { token, user }
         })
       })
@@ -56,10 +57,22 @@ const updatePasswordForm = (password) => {
   }
 }
 
+export const DISPLAY_AUTH_MODAL = 'DISPLAY_AUTH_MODAL'
+const displayAuthModal = () => {
+  return { type: DISPLAY_AUTH_MODAL }
+}
+
+export const HIDE_AUTH_MODAL = 'HIDE_AUTH_MODAL'
+const hideAuthModal = () => {
+  return { type: HIDE_AUTH_MODAL }
+}
+
 export const actionCreators = {
   updateSearchTerm,
   barSeachResults,
   handleSignIn,
   updateEmailForm,
-  updatePasswordForm
+  updatePasswordForm,
+  displayAuthModal,
+  hideAuthModal
 }

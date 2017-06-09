@@ -21,12 +21,6 @@ class App extends Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      displayAuthModal: false,
-      emailForm: '',
-      passwordForm: ''
-    }
-
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.displayAuthModal = this.displayAuthModal.bind(this)
@@ -46,11 +40,11 @@ class App extends Component {
   }
 
   displayAuthModal() {
-    this.setState({ displayAuthModal: true })
+    this.props.actions.displayAuthModal()
   }
 
   hideAuthModal() {
-    this.setState({ displayAuthModal: false })
+    this.props.actions.hideAuthModal()
   }
 
   handleEmailChange(e) {
@@ -108,9 +102,8 @@ class App extends Component {
             {this.renderBars()}
           </Row>
         </Grid>
-        { this.state.displayAuthModal
+        { this.props.uiState.displayAuthModal
             ? <AuthModal
-                show={this.state.displayAuthModal}
                 onHide={this.hideAuthModal}
                 onSubmit={this.handleSignIn}
                 handleEmailChange={this.handleEmailChange}
@@ -124,8 +117,8 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = ({ search, bars, auth }) => {
-  return { search, bars, auth }
+const mapStateToProps = ({ search, bars, auth, uiState }) => {
+  return { search, bars, auth, uiState }
 }
 
 const mapDispatchToProps = (dispatch) => {

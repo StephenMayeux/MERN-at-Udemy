@@ -11,7 +11,6 @@ import {
 
 const AuthModal = (props) => {
   const {
-    show,
     onHide,
     onSubmit,
     handleEmailChange,
@@ -19,7 +18,7 @@ const AuthModal = (props) => {
     auth
   } = props
   return (
-    <Modal show={show}>
+    <Modal show={true}>
       <Modal.Header closeButton onHide={onHide}>
         Sign In or Sign Up
       </Modal.Header>
