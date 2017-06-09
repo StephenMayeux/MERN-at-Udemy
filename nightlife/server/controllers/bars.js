@@ -40,7 +40,7 @@ exports.toggleVisit = (req, res) => {
     if (!bar) {
       const newBar = new Bar({
         yelp_id: id,
-        visitors: [req.user.twitter_id]
+        visitors: [req.user._id]
       })
       newBar.save(err => {
         if (err) return res.send({ success: false, msg: 'error writing to db', err })
@@ -48,12 +48,12 @@ exports.toggleVisit = (req, res) => {
       })
     }
 
-    if (_.includes(bar.visitors, req.user.twitter_id)) {
-      const visitors = _.without(bar.visitors, req.user.twitter_id)
+    if (_.includes(bar.visitors, req.user._id)) {
+      const visitors = _.without(bar.visitors, req.user._id)
       bar.visitors = visitors
     }
     else {
-      const visitors = _.concat(bar.visitors, req.user.twitter_id)
+      const visitors = _.concat(bar.visitors, req.user._id)
       bar.visitors = visitors
     }
 
