@@ -25,7 +25,23 @@ const barSeachResults = (location) => {
   }
 }
 
+export const HANDLE_SIGN_IN = 'HANDLE_SIGN_IN'
+const handleSignIn = ({ emailForm, passwordForm }) => {
+  return (dispatch) => {
+    axios.post(`${BASE_URL}/signin`, { email: emailForm, password: passwordForm })
+      .then(({ data }) => {
+        const { token, user } = data
+        localStorage.setItem('token', token)
+        return dispatch({
+          type: HANDLE_SIGN_IN,
+          payload: { token, user }
+        })
+      })
+  }
+}
+
 export const actionCreators = {
   updateSearchTerm,
-  barSeachResults
+  barSeachResults,
+  handleSignIn
 }
