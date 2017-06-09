@@ -40,8 +40,26 @@ const handleSignIn = ({ emailForm, passwordForm }) => {
   }
 }
 
+export const UPDATE_EMAIL_FORM = 'UPDATE_EMAIL_FORM'
+const updateEmailForm = (email) => {
+  return {
+    type: UPDATE_EMAIL_FORM,
+    payload: email
+  }
+}
+
+export const UPDATE_PASSWORD_FORM = 'UPDATE_PASSWORD_FORM'
+const updatePasswordForm = (password) => {
+  return {
+    type: UPDATE_PASSWORD_FORM,
+    payload: password
+  }
+}
+
 export const actionCreators = {
   updateSearchTerm,
   barSeachResults,
-  handleSignIn
+  handleSignIn,
+  updateEmailForm,
+  updatePasswordForm
 }

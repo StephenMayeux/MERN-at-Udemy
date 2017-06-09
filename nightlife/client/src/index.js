@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
-import logger from 'redux-logger';
+import { createLogger } from 'redux-logger';
 
 import App from './containers/App';
-
 import reducers from './reducers';
+const logger = createLogger({ collapsed: true })
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk, logger)(createStore);
 const store = createStoreWithMiddleware(reducers,

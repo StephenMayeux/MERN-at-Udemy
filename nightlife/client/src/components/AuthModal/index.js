@@ -9,7 +9,15 @@ import {
   Button
 } from 'react-bootstrap'
 
-const AuthModal = ({ show, onHide, onSubmit }) => {
+const AuthModal = (props) => {
+  const {
+    show,
+    onHide,
+    onSubmit,
+    handleEmailChange,
+    handlePasswordChange,
+    auth
+  } = props
   return (
     <Modal show={show}>
       <Modal.Header closeButton onHide={onHide}>
@@ -22,7 +30,13 @@ const AuthModal = ({ show, onHide, onSubmit }) => {
               Email
             </Col>
             <Col sm={10}>
-              <FormControl type="email" placeholder="Email" />
+              <FormControl
+                type="email"
+                placeholder="Email"
+                onChange={handleEmailChange}
+                value={auth.emailForm}
+                autoFocus
+              />
             </Col>
           </FormGroup>
           <FormGroup controlId="formHorizontalPassword">
@@ -30,7 +44,12 @@ const AuthModal = ({ show, onHide, onSubmit }) => {
               Password
             </Col>
             <Col sm={10}>
-              <FormControl type="password" placeholder="Password" />
+              <FormControl
+                type="password"
+                placeholder="Password"
+                onChange={handlePasswordChange}
+                value={auth.passwordForm}
+              />
             </Col>
           </FormGroup>
           <FormGroup>

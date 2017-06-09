@@ -31,22 +31,18 @@ class App extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.displayAuthModal = this.displayAuthModal.bind(this)
     this.hideAuthModal = this.hideAuthModal.bind(this)
+    this.handleEmailChange = this.handleEmailChange.bind(this)
+    this.handlePasswordChange = this.handlePasswordChange.bind(this)
     this.handleSignIn = this.handleSignIn.bind(this)
+  }
+
+  handleChange(e) {
+    this.props.actions.updateSearchTerm(e.target.value)
   }
 
   handleSubmit(e) {
     e.preventDefault()
     this.props.actions.barSeachResults(this.props.search)
-  }
-
-  handleSignIn(e) {
-    e.preventDefault()
-    const { emailForm, passwordForm } = this.state
-    this.props.actions.handleSignIn({ emailForm, passwordForm })
-  }
-
-  handleChange(e) {
-    this.props.actions.updateSearchTerm(e.target.value)
   }
 
   displayAuthModal() {
@@ -55,6 +51,20 @@ class App extends Component {
 
   hideAuthModal() {
     this.setState({ displayAuthModal: false })
+  }
+
+  handleEmailChange(e) {
+    this.props.actions.updateEmailForm(e.target.value)
+  }
+
+  handlePasswordChange(e) {
+    this.props.actions.updatePasswordForm(e.target.value)
+  }
+
+  handleSignIn(e) {
+    e.preventDefault()
+    const { emailForm, passwordForm } = this.props.auth
+    this.props.actions.handleSignIn({ emailForm, passwordForm })
   }
 
   renderForm() {
@@ -103,6 +113,9 @@ class App extends Component {
                 show={this.state.displayAuthModal}
                 onHide={this.hideAuthModal}
                 onSubmit={this.handleSignIn}
+                handleEmailChange={this.handleEmailChange}
+                handlePasswordChange={this.handlePasswordChange}
+                auth={this.props.auth}
               />
             : null
         }
