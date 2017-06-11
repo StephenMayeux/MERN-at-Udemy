@@ -106,9 +106,10 @@ class App extends Component {
           <BarCard
             {...bar}
             actions={actions}
+            isLoggedIn={this.props.auth.isLoggedIn}
           />
           {(i + 1) % 3 === 0
-            ? <div className="clearfix visible-lg-block"></div>
+            ? <div className="clearfix visible-lg-block visible-md-block"></div>
             : null
           }
         </div>

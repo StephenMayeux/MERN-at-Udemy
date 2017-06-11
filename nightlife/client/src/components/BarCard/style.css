@@ -7,6 +7,6 @@ h3 {
   text-align: center;
 }
 
-div.thumbnail:nth-child(4n) {
-  clear: both;
+.label {
+  vertical-align: -webkit-baseline-middle !important;
 }
