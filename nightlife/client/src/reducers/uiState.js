@@ -19,7 +19,7 @@ export default (state = DEFAULT_STATE, action) => {
     case DISPLAY_AUTH_MODAL:
       return { ...state, displayAuthModal: true }
     case HIDE_AUTH_MODAL:
-      return { ...state, displayAuthModal: false }
+      return { ...state, displayAuthModal: false, authErrorMessage: '' }
     default:
       return state
   }
