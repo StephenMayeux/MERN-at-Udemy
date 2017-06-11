@@ -62,6 +62,15 @@ const handleSignIn = ({ emailForm, passwordForm }) => {
   }
 }
 
+export const SIGN_OUT = 'SIGN_OUT'
+const handleSignOut = () => {
+  localStorage.removeItem('token')
+  localStorage.removeItem('user')
+  return {
+    type: SIGN_OUT
+  }
+}
+
 export const UPDATE_EMAIL_FORM = 'UPDATE_EMAIL_FORM'
 const updateEmailForm = (email) => {
   return {
@@ -92,6 +101,7 @@ export const actionCreators = {
   updateSearchTerm,
   barSeachResults,
   handleSignIn,
+  handleSignOut,
   updateEmailForm,
   updatePasswordForm,
   displayAuthModal,

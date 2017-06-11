@@ -28,6 +28,7 @@ class App extends Component {
     this.handleEmailChange = this.handleEmailChange.bind(this)
     this.handlePasswordChange = this.handlePasswordChange.bind(this)
     this.handleSignIn = this.handleSignIn.bind(this)
+    this.handleSignOut = this.handleSignOut.bind(this)
   }
 
   handleChange(e) {
@@ -61,6 +62,25 @@ class App extends Component {
     this.props.actions.handleSignIn({ emailForm, passwordForm })
   }
 
+  handleSignOut() {
+    this.props.actions.handleSignOut()
+  }
+
+  renderAuthButton() {
+    if (this.props.auth.isLoggedIn) {
+      return (
+        <Button bsStyle="primary" onClick={this.handleSignOut}>
+          Sign Out
+        </Button>
+      )
+    }
+    return (
+      <Button bsStyle="primary" onClick={this.displayAuthModal}>
+        Sign In or Sign Up
+      </Button>
+    )
+  }
+
   renderForm() {
     return (
       <Form onSubmit={this.handleSubmit} className="form-inline form-container">
@@ -89,9 +109,7 @@ class App extends Component {
         <div className="header">
           <h2>Welcome to Nightlife</h2>
           <p className="lead">Search for bars and tell your friends</p>
-          <Button bsStyle="primary" onClick={this.displayAuthModal}>
-            Sign In or Sign Up
-          </Button>
+          {this.renderAuthButton()}
         </div>
         <p className="intro">
           To get started, use the search form below.
