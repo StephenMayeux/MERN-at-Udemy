@@ -28,6 +28,12 @@ const barSeachResults = (location) => {
 export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS'
 export const SIGN_IN_FAILURE = 'SIGN_IN_FAILURE'
 const handleSignIn = ({ emailForm, passwordForm }) => {
+  if (!emailForm || !passwordForm) {
+    return {
+      type: SIGN_IN_FAILURE,
+      payload: 'You must include an email and password.'
+    }
+  }
   return (dispatch) => {
     axios.post(`${BASE_URL}/signin`, { email: emailForm, password: passwordForm })
       .then(({ data }) => {
@@ -47,10 +53,9 @@ const handleSignIn = ({ emailForm, passwordForm }) => {
         }
       })
       .catch(error => {
-        console.log(error)
         dispatch({
           type: SIGN_IN_FAILURE,
-          payload: 'You must include an email and/or password'
+          payload: 'There was a problem with the server'
         })
       })
   }
