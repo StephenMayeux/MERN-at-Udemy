@@ -100,7 +100,20 @@ class App extends Component {
   renderBars() {
     const { bars, actions } = this.props
     if (_.isEmpty(bars)) return null
-    return _.map(bars, (bar, i) => <BarCard key={bar.id} {...bar} actions={actions} />)
+    return _.map(bars, (bar, i) => {
+      return (
+        <div key={bar.id}>
+          <BarCard
+            {...bar}
+            actions={actions}
+          />
+          {(i + 1) % 3 === 0
+            ? <div className="clearfix visible-lg-block"></div>
+            : null
+          }
+        </div>
+      )
+    })
   }
 
   render() {

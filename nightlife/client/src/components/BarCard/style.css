@@ -6,3 +6,7 @@
 h3 {
   text-align: center;
 }
+
+div.thumbnail:nth-child(4n) {
+  clear: both;
+}

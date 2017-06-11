@@ -1,5 +1,6 @@
 import React from 'react'
 import { Thumbnail, Button, Col } from 'react-bootstrap'
+
 import './style.css'
 
 const BarCard = (props) => {
