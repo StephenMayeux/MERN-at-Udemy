@@ -13,6 +13,14 @@ const createStoreWithMiddleware = applyMiddleware(reduxThunk, logger)(createStor
 const store = createStoreWithMiddleware(reducers,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
+const { token, user } = localStorage
+if (token && user) {
+  store.dispatch({
+    type: 'SIGN_IN_SUCCESS',
+    payload: { token, user }
+  })
+}
+
 ReactDOM.render(
   <Provider store={store}>
     <App />

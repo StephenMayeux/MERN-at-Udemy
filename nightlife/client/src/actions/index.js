@@ -40,9 +40,10 @@ const handleSignIn = ({ emailForm, passwordForm }) => {
         if (data.success) {
           const { token, user } = data
           localStorage.setItem('token', token)
+          localStorage.setItem('user', user._id)
           dispatch({
             type: SIGN_IN_SUCCESS,
-            payload: { token, user }
+            payload: { token, user: user._id }
           })
         }
         else {

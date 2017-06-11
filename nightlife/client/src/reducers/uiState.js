@@ -13,7 +13,7 @@ const DEFAULT_STATE = {
 export default (state = DEFAULT_STATE, action) => {
   switch (action.type ) {
     case SIGN_IN_SUCCESS:
-      return DEFAULT_STATE
+      return { ...state, displayAuthModal: false, authErrorMessage: '' }
     case SIGN_IN_FAILURE:
       return { ...state, authErrorMessage: action.payload }
     case DISPLAY_AUTH_MODAL:
