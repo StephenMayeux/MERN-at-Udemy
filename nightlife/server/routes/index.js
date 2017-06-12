@@ -11,7 +11,6 @@ router.get('/', (req, res) => {
 })
 
 // Authenication Routes and Middleware
-const requireAuth = passport.authenticate('jwt', { session: false });
 const requireSignin = passport.authenticate('local', { session: false });
 
 router.post('/signin', requireSignin, Authentication.signin);

@@ -97,6 +97,22 @@ const hideAuthModal = () => {
   return { type: HIDE_AUTH_MODAL }
 }
 
+export const TOGGLE_CHECK_IN = 'TOGGLE_CHECK_IN'
+const toggleCheckIn = (id) => {
+  return (dispatch, getState) => {
+    const config = { headers: { 'Authorization': getState().auth.token } }
+    axios.post(`${BASE_URL}/bars/visit/${id}`, {}, config)
+      .then(({ data }) => {
+        const { visitors, yelp_id } = data.bar
+        dispatch({
+          type: TOGGLE_CHECK_IN,
+          payload: { visitors, yelp_id }
+        })
+      })
+      .catch(error => console.error(error))
+  }
+}
+
 export const actionCreators = {
   updateSearchTerm,
   barSeachResults,
@@ -105,5 +121,6 @@ export const actionCreators = {
   updateEmailForm,
   updatePasswordForm,
   displayAuthModal,
-  hideAuthModal
+  hideAuthModal,
+  toggleCheckIn
 }

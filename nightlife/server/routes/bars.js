@@ -1,13 +1,12 @@
+const passportService = require('../services/passport');
+const passport = require('passport')
 const express = require('express')
 const router = express.Router()
 const BarsController = require('../controllers/bars')
 
-const authRequired = (req, res, next) => {
-  if (req.isAuthenticated()) return next()
-  res.send({ success: false, msg: 'You are not signed in' })
-}
+const requireAuth = passport.authenticate('jwt', { session: false });
 
 router.get('/search/:location', BarsController.searchForBars)
-router.post('/visit/:id', BarsController.toggleVisit)
+router.post('/visit/:id', requireAuth, BarsController.toggleVisit)
 
 module.exports = router

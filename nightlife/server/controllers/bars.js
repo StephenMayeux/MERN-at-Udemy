@@ -40,26 +40,27 @@ exports.toggleVisit = (req, res) => {
     if (!bar) {
       const newBar = new Bar({
         yelp_id: id,
-        visitors: [req.user._id]
+        visitors: [req.user._id.toString()]
       })
       newBar.save(err => {
         if (err) return res.send({ success: false, msg: 'error writing to db', err })
         return res.send({ success: true, msg: 'success adding bar', bar: newBar })
       })
     }
-
-    if (_.includes(bar.visitors, req.user._id)) {
-      const visitors = _.without(bar.visitors, req.user._id)
-      bar.visitors = visitors
-    }
     else {
-      const visitors = _.concat(bar.visitors, req.user._id)
-      bar.visitors = visitors
-    }
 
-    bar.save(err => {
-      if (err) return res.send({ success: false, msg: 'error updating record' })
-      res.send({ success: true, msg: 'success updating bar', bar })
-    })
+      if (_.includes(bar.visitors, req.user._id.toString())) {
+        const visitors = _.without(bar.visitors, req.user._id.toString())
+        bar.visitors = visitors
+      }
+      else {
+        const visitors = _.concat(bar.visitors, req.user._id.toString())
+        bar.visitors = visitors
+      }
+      bar.save(err => {
+        if (err) return res.send({ success: false, msg: 'error updating record' })
+        res.send({ success: true, msg: 'success updating bar', bar })
+      })
+    }
   })
 }
