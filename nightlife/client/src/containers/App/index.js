@@ -108,6 +108,7 @@ class App extends Component {
             actions={actions}
             isLoggedIn={this.props.auth.isLoggedIn}
             toggleCheckIn={this.props.actions.toggleCheckIn}
+            user={this.props.auth.user}
           />
           {(i + 1) % 3 === 0
             ? <div className="clearfix visible-lg-block visible-md-block"></div>

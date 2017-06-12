@@ -10,3 +10,9 @@ h3 {
 .label {
   vertical-align: -webkit-baseline-middle !important;
 }
+
+.glyphicon {
+  vertical-align: -webkit-baseline-middle;
+  margin-left: 10px;
+  color: red;
+}
