@@ -92,7 +92,7 @@ class App extends Component {
             value={this.props.search}
           />
         </FormGroup>
-        <Button bsStyle="primary">Search</Button>
+        <Button type="submit" bsStyle="primary">Search</Button>
       </Form>
     )
   }
