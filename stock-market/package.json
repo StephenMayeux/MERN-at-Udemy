@@ -25,6 +25,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "run-server": "yarn build && nodemon server.js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
