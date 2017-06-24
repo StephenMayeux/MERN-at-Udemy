@@ -1,7 +1,34 @@
+const moment = require('moment')
+const fetch = require('isomorphic-fetch')
 const Symbol = require('./models/Symbol')
 
 module.exports = (socket) => {
-  // put socket event emitters/listeners here 
+
+  Symbol.find({}).lean().exec((err, symbols) => {
+    if (err) {
+      socket.emit('error', { msg: 'Error reading from database' })
+    } else if (!symbols.length) {
+      socket.emit('error', { msg: 'There are no symbols in the database' })
+    } else {
+      const ticker = symbols.map(({ symbol }) => symbol).join(',')
+      const lte = moment().format('YYYYMMDD')
+      const gte = moment().subtract(1, 'months').format('YYYYMMDD')
+      const quandl = `https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?qopts.columns=ticker,date,close&date.gte=${gte}&date.lte=${lte}&ticker=${ticker}&api_key=${process.env.QUANDL_API}`
+
+      fetch(quandl).then(response => response.json()).then(({ datatable }) => {
+        const { data } = datatable
+        const chartData = data.map(chunk => {
+          return {
+            symbol: chunk[0],
+            date: chunk[1],
+            close: chunk[2]
+          }
+        })
+        socket.emit('init', chartData)
+      })
+    }
+  })
+
 }
 
 /*
