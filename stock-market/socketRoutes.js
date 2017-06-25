@@ -6,9 +6,9 @@ module.exports = (socket) => {
 
   Symbol.find({}).lean().exec((err, symbols) => {
     if (err) {
-      socket.emit('error', { msg: 'Error reading from database' })
+      socket.emit('initWithError', { msg: 'Error reading from database' })
     } else if (!symbols.length) {
-      socket.emit('error', { msg: 'There are no symbols in the database' })
+      socket.emit('initWithError', { msg: 'There are no symbols in the database' })
     } else {
       const tickers = symbols.map(({ symbol }) => symbol)
       const lte = moment().format('YYYYMMDD')

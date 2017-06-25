@@ -16,8 +16,6 @@ io.sockets.on('connection', require('./socketRoutes'))
 app.use(express.static(path.join(__dirname, 'build')))
 app.use(logger('combined'))
 
-const server = http.createServer(app)
-
 app.get('*', (req, res) => {
   res.sendFile(__dirname + '/index.html')
 })

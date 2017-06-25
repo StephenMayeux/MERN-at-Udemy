@@ -35,7 +35,7 @@ class App extends Component {
     return (
       <LineChart width={730} height={250} data={this.props.stocks.chartData}>
         <XAxis dataKey="date" />
-        <YAxis />
+        <YAxis type="number" domain={['dataMin', 'dataMax']} />
         <Legend />
         <Tooltip />
         {this.renderChartLines()}
