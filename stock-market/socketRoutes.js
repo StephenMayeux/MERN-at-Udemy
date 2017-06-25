@@ -17,13 +17,7 @@ module.exports = (socket) => {
 
       fetch(quandl).then(response => response.json()).then(({ datatable }) => {
         const { data } = datatable
-        const chartData = data.map(chunk => {
-          return {
-            [chunk[0]]: chunk[2],
-            date: chunk[1]
-          }
-        })
-        socket.emit('init', { chartData, tickers })
+        socket.emit('init', { data, tickers })
       })
     }
   })

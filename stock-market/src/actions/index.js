@@ -1,7 +1,14 @@
 import _ from 'lodash'
 
 export const UPDATE_STOCKS = 'UPDATE_STOCKS'
-const updateStocks = ({ chartData, tickers }) => {
+const updateStocks = ({ data, tickers }) => {
+
+  const chartData = data.map(chunk => {
+    return {
+      [chunk[0]]: chunk[2],
+      date: chunk[1]
+    }
+  })
 
   let formattedChartData = []
 
