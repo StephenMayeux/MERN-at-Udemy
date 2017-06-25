@@ -10,21 +10,20 @@ module.exports = (socket) => {
     } else if (!symbols.length) {
       socket.emit('error', { msg: 'There are no symbols in the database' })
     } else {
-      const ticker = symbols.map(({ symbol }) => symbol).join(',')
+      const tickers = symbols.map(({ symbol }) => symbol)
       const lte = moment().format('YYYYMMDD')
       const gte = moment().subtract(1, 'months').format('YYYYMMDD')
-      const quandl = `https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?qopts.columns=ticker,date,close&date.gte=${gte}&date.lte=${lte}&ticker=${ticker}&api_key=${process.env.QUANDL_API}`
+      const quandl = `https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?qopts.columns=ticker,date,close&date.gte=${gte}&date.lte=${lte}&ticker=${tickers.join(',')}&api_key=${process.env.QUANDL_API}`
 
       fetch(quandl).then(response => response.json()).then(({ datatable }) => {
         const { data } = datatable
         const chartData = data.map(chunk => {
           return {
-            symbol: chunk[0],
-            date: chunk[1],
-            close: chunk[2]
+            [chunk[0]]: chunk[2],
+            date: chunk[1]
           }
         })
-        socket.emit('init', chartData)
+        socket.emit('init', { chartData, tickers })
       })
     }
   })
