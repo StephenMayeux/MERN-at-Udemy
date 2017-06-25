@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
+import stocks from './stocks'
 
 const rootReducer = combineReducers({
-  messages: (state = 'root reducer') => state
+  stocks
 });
 
 export default rootReducer;
