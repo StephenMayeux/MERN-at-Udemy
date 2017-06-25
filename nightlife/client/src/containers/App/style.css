@@ -1,8 +1,5 @@
-.app {
-  text-align: center;
-}
-
 .header {
+  text-align: center;
   background-color: #222;
   padding: 20px;
   color: white;
@@ -11,6 +8,7 @@
 .intro {
   padding: 25px 0;
   font-size: large;
+  text-align: center;
 }
 
 .form-container {
