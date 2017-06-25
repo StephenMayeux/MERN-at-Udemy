@@ -2,28 +2,11 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Grid, Row, Col } from 'react-bootstrap'
-import {
-  LineChart,
-  XAxis,
-  YAxis,
-  Legend,
-  Line,
-  CartesianGrid,
-  Tooltip
-} from 'recharts'
 import io from 'socket.io-client'
-import _ from 'lodash'
 
+import LineChart from '../../components/LineChart'
 import { actionCreators as actions } from '../../actions'
 const socket = io.connect()
-
-const colors = [
-  '#82ca9d',
-  '#C0392B',
-  '#2980B9',
-  '#27AE60',
-  '#E67E22'
-]
 
 class App extends Component {
 
@@ -31,32 +14,17 @@ class App extends Component {
     socket.on('init', this.props.actions.updateStocks)
   }
 
-  renderChart() {
-    return (
-      <LineChart width={730} height={250} data={this.props.stocks.chartData}>
-        <XAxis dataKey="date" />
-        <YAxis type="number" domain={['dataMin', 'dataMax']} />
-        <Legend />
-        <Tooltip />
-        {this.renderChartLines()}
-      </LineChart>
-    )
-  }
-
-  renderChartLines() {
-    return this.props.stocks.tickers.map(ticker => {
-      return (
-        <Line key={ticker} type="monotone" dataKey={ticker} stroke={_.sample(colors)} />
-      )
-    })
-  }
-
   render() {
     return (
       <Grid>
         <Row>
           <Col xs={12}>
-            {this.props.stocks.tickers.length ? this.renderChart() : null}
+            {this.props.stocks.tickers.length
+              ? <LineChart
+                  chartData={this.props.stocks.chartData}
+                  tickers={this.props.stocks.tickers}
+                />
+              : null}
           </Col>
         </Row>
       </Grid>
