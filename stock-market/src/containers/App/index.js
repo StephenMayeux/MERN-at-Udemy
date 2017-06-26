@@ -27,6 +27,7 @@ class App extends Component {
 
   handleDelete(ticker) {
     this.props.actions.deleteTicker({ ticker })
+    socket.emit('deleteTicker', { ticker })
   }
 
   renderChart() {
