@@ -4,3 +4,7 @@
   border-left: 2px solid #5b5b5b;
   background-color: #fff;
 }
+
+.close-icon {
+  cursor: pointer;
+}

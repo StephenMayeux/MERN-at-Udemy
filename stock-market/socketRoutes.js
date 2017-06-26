@@ -4,6 +4,7 @@ const Symbol = require('./models/Symbol')
 
 module.exports = (socket) => {
 
+  // Initial Load
   Symbol.find({}).lean().exec((err, symbols) => {
     if (err) {
       socket.emit('initWithError', { msg: 'Error reading from database' })
@@ -20,6 +21,17 @@ module.exports = (socket) => {
         socket.emit('init', { data, tickers })
       })
     }
+  })
+
+  // Deleting Stock
+  socket.on('deleteTicker', ({ ticker }) => {
+    Symbol.deleteOne({ symbol: ticker }, (err) => {
+      if (err) {
+        socket.emit('deleteWithError', { msg: 'Error deleting stock' })
+      } else {
+        socket.broadcast.emit('deleteStock', { ticker })
+      }
+    })
   })
 
 }

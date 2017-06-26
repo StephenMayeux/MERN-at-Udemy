@@ -1,4 +1,7 @@
 import _ from 'lodash'
+import io from 'socket.io-client'
+
+const socket = io.connect()
 
 export const UPDATE_STOCKS = 'UPDATE_STOCKS'
 const updateStocks = ({ data, tickers }) => {
@@ -31,6 +34,26 @@ const updateStocks = ({ data, tickers }) => {
   }
 }
 
+const deleteTicker = ({ ticker }) => {
+  return (dispatch, getState) => {
+    let { chartData, tickers } = _.cloneDeep(getState().stocks)
+
+    _.pull(tickers, ticker)
+    chartData.forEach(chunk => {
+      delete chunk[ticker]
+    })
+
+    socket.emit('deleteTicker', { ticker })
+
+    dispatch({
+      type: UPDATE_STOCKS,
+      chartData,
+      tickers
+    })
+  }
+}
+
 export const actionCreators = {
-  updateStocks
+  updateStocks,
+  deleteTicker
 }

@@ -14,9 +14,19 @@ import './style.css'
 const socket = io.connect()
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+
+    this.handleDelete = this.handleDelete.bind(this)
+  }
 
   componentDidMount() {
     socket.on('init', this.props.actions.updateStocks)
+    socket.on('deleteStock', this.props.actions.deleteTicker)
+  }
+
+  handleDelete(ticker) {
+    this.props.actions.deleteTicker({ ticker })
   }
 
   renderChart() {
@@ -36,11 +46,11 @@ class App extends Component {
 
     return this.props.stocks.tickers.map(ticker => {
       return (
-        <Col xs={4}>
+        <Col xs={4} key={ticker}>
           <TickerCard
-            key={ticker}
             mostRecentClosePrice={mostRecentPrices[ticker]}
             ticker={ticker}
+            handleDelete={this.handleDelete}
           />
         </Col>
       )
