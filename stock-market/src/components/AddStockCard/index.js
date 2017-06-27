@@ -14,6 +14,7 @@ export default class AddStockCard extends Component {
     }
 
     this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleChange(e) {
@@ -22,11 +23,24 @@ export default class AddStockCard extends Component {
     })
   }
 
+  handleSubmit(e) {
+    e.preventDefault()
+    if (this.props.tickers.includes(this.state.formValue.toUpperCase())) {
+      this.props.displayMessage('This stock is already displayed')
+    }
+    else {
+      this.props.socket.emit('addStock', { symbol: this.state.formValue.toUpperCase() })
+      this.setState({
+        formValue: ''
+      })
+    }
+  }
+
   render() {
     return (
       <div className="tickerCardWrapper">
         <h2>Add New Stock</h2>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <FormControl
             type="text"
             value={this.state.formValue}
@@ -37,6 +51,10 @@ export default class AddStockCard extends Component {
             Submit
           </Button>
         </form>
+        {this.props.errorMessage
+          ? <div style={{ fontColor: 'red' }}>{this.props.errorMessage}</div>
+          : null
+        }
       </div>
     )
   }

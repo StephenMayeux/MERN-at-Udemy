@@ -48,7 +48,41 @@ const deleteTicker = ({ ticker }) => {
   }
 }
 
+export const DISPLAY_MESSAGE = 'DISPLAY_MESSAGE'
+const displayMessage = (msg) => {
+  return {
+    type: DISPLAY_MESSAGE,
+    msg
+  }
+}
+
+const addNewStock = ({ data, ticker }) => {
+  return (dispatch, getState) => {
+    let { chartData, tickers } = _.cloneDeep(getState().stocks)
+
+    tickers.push(ticker)
+    const formattedData = data.map(chunk => {
+      return {
+        [chunk[0]]: chunk[2],
+        date: chunk[1]
+      }
+    })
+
+    for (let i = 0; i < chartData.length; i++) {
+      Object.assign(chartData[i], formattedData[i])
+    }
+
+    dispatch({
+      type: UPDATE_STOCKS,
+      chartData,
+      tickers
+    })
+  }
+}
+
 export const actionCreators = {
   updateStocks,
-  deleteTicker
+  deleteTicker,
+  displayMessage,
+  addNewStock
 }

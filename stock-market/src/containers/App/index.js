@@ -24,6 +24,7 @@ class App extends Component {
   componentDidMount() {
     socket.on('init', this.props.actions.updateStocks)
     socket.on('deleteStock', this.props.actions.deleteTicker)
+    socket.on('newStock', this.props.actions.addNewStock)
   }
 
   handleDelete(ticker) {
@@ -72,6 +73,9 @@ class App extends Component {
           <Col xs={4}>
             <AddStockCard
               tickers={this.props.stocks.tickers}
+              displayMessage={this.props.actions.displayMessage}
+              socket={socket}
+              errorMessage={this.props.messages.error}
             />
           </Col>
           {this.renderTickerCards()}
@@ -81,8 +85,8 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = ({ stocks }) => {
-  return { stocks }
+const mapStateToProps = ({ stocks, messages }) => {
+  return { stocks, messages }
 }
 
 const mapDispatchToProps = (dispatch) => {

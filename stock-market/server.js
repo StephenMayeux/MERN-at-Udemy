@@ -11,7 +11,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/stock-market')
 
 const server = http.createServer(app)
 const io = require('socket.io').listen(server)
-io.sockets.on('connection', require('./socketRoutes'))
+require('./socketRoutes')(io)
 
 app.use(express.static(path.join(__dirname, 'build')))
 app.use(logger('combined'))

@@ -2,40 +2,68 @@ const moment = require('moment')
 const fetch = require('isomorphic-fetch')
 const Symbol = require('./models/Symbol')
 
-module.exports = (socket) => {
+module.exports = (io) => {
 
-  // Initial Load
-  Symbol.find({}).lean().exec((err, symbols) => {
-    if (err) {
-      socket.emit('initWithError', { msg: 'Error reading from database' })
-    } else if (!symbols.length) {
-      socket.emit('initWithError', { msg: 'There are no symbols in the database' })
-    } else {
-      const tickers = symbols.map(({ symbol }) => symbol)
+  io.sockets.on('connection', (socket) => {
+
+    // Initial Load
+    Symbol.find({}).lean().exec((err, symbols) => {
+      if (err) {
+        socket.emit('errorMessage', { msg: 'Error reading from database' })
+      } else if (!symbols.length) {
+        socket.emit('errorMessage', { msg: 'There are no symbols in the database' })
+      } else {
+        const tickers = symbols.map(({ symbol }) => symbol)
+        const lte = moment().format('YYYYMMDD')
+        const gte = moment().subtract(1, 'months').format('YYYYMMDD')
+        const quandl = `https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?qopts.columns=ticker,date,close&date.gte=${gte}&date.lte=${lte}&ticker=${tickers.join(',')}&api_key=${process.env.QUANDL_API}`
+
+        fetch(quandl).then(response => response.json()).then(({ datatable }) => {
+          const { data } = datatable
+          socket.emit('init', { data, tickers })
+        })
+      }
+    })
+
+    // Deleting Stock
+    socket.on('deleteTicker', ({ ticker }) => {
+      Symbol.deleteOne({ symbol: ticker }, (err) => {
+        if (err) {
+          socket.emit('errorMessage', { msg: 'Error deleting stock' })
+        } else {
+          socket.broadcast.emit('deleteStock', { ticker })
+        }
+      })
+    })
+
+    // Adding stock
+    socket.on('addStock', ({ symbol }) => {
       const lte = moment().format('YYYYMMDD')
       const gte = moment().subtract(1, 'months').format('YYYYMMDD')
-      const quandl = `https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?qopts.columns=ticker,date,close&date.gte=${gte}&date.lte=${lte}&ticker=${tickers.join(',')}&api_key=${process.env.QUANDL_API}`
+      const quandl = `https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?qopts.columns=ticker,date,close&date.gte=${gte}&date.lte=${lte}&ticker=${symbol}&api_key=${process.env.QUANDL_API}`
 
       fetch(quandl).then(response => response.json()).then(({ datatable }) => {
         const { data } = datatable
-        socket.emit('init', { data, tickers })
+        if (!data.length) {
+          socket.emit('errorMessage', { msg: 'This symbol does not exist' })
+        }
+        else {
+          const newSymbol = new Symbol({
+            symbol
+          })
+          newSymbol.save(err => {
+            if (err) {
+              socket.emit('errorMessage', { msg: 'Error saving new symbol to database' })
+            }
+            else {
+              io.emit('newStock', { data, ticker: symbol })
+            }
+          })
+        }
       })
-    }
-  })
-
-  // Deleting Stock
-  socket.on('deleteTicker', ({ ticker }) => {
-    Symbol.deleteOne({ symbol: ticker }, (err) => {
-      if (err) {
-        socket.emit('deleteWithError', { msg: 'Error deleting stock' })
-      } else {
-        socket.broadcast.emit('deleteStock', { ticker })
-      }
     })
-  })
 
-  // Adding stock
-  
+  })
 
 }
 
