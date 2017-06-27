@@ -3,14 +3,14 @@ import {
 } from '../actions'
 
 // uncomment with client-only dev server
-// import {
-//   chartData,
-//   tickers
-// } from '../lib/seed'
+import {
+  chartData,
+  tickers
+} from '../lib/seed'
 
 const INITIAL_STATE = {
-  chartData: [],
-  tickers: []
+  chartData,
+  tickers
 }
 
 export default (state = INITIAL_STATE, action) => {

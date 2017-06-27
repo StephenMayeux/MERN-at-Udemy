@@ -7,6 +7,7 @@ import _ from 'lodash'
 
 import LineChart from '../../components/LineChart'
 import TickerCard from '../../components/TickerCard'
+import AddStockCard from '../../components/AddStockCard'
 import { actionCreators as actions } from '../../actions'
 
 import './style.css'
@@ -68,6 +69,11 @@ class App extends Component {
           </Col>
         </Row>
         <Row>
+          <Col xs={4}>
+            <AddStockCard
+              tickers={this.props.stocks.tickers}
+            />
+          </Col>
           {this.renderTickerCards()}
         </Row>
       </Grid>

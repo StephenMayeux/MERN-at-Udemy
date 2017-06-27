@@ -34,6 +34,9 @@ module.exports = (socket) => {
     })
   })
 
+  // Adding stock
+  
+
 }
 
 /*
