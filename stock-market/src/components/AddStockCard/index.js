@@ -15,6 +15,7 @@ export default class AddStockCard extends Component {
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.onFocus = this.onFocus.bind(this)
   }
 
   handleChange(e) {
@@ -36,12 +37,18 @@ export default class AddStockCard extends Component {
     }
   }
 
+  onFocus() {
+    console.log('got called')
+    this.props.hideMessage()
+  }
+
   render() {
     return (
       <div className="tickerCardWrapper">
         <h2>Add New Stock</h2>
         <form onSubmit={this.handleSubmit}>
           <FormControl
+            onFocus={this.onFocus}
             type="text"
             value={this.state.formValue}
             name="formValue"
@@ -52,7 +59,7 @@ export default class AddStockCard extends Component {
           </Button>
         </form>
         {this.props.errorMessage
-          ? <div style={{ fontColor: 'red' }}>{this.props.errorMessage}</div>
+          ? <div style={{ color: 'red' }}>{this.props.errorMessage}</div>
           : null
         }
       </div>

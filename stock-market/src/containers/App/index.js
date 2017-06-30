@@ -103,6 +103,7 @@ class App extends Component {
             <AddStockCard
               tickers={this.props.stocks.tickers}
               displayMessage={this.props.actions.displayMessage}
+              hideMessage={this.props.actions.hideMessage}
               socket={socket}
               errorMessage={this.props.messages.error}
             />

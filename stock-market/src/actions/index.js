@@ -56,6 +56,13 @@ const displayMessage = (msg) => {
   }
 }
 
+export const HIDE_MESSAGE = 'HIDE_MESSAGE'
+const hideMessage = () => {
+  return {
+    type: HIDE_MESSAGE
+  }
+}
+
 const addNewStock = ({ data, ticker }) => {
   return (dispatch, getState) => {
     let { chartData, tickers } = _.cloneDeep(getState().stocks)
@@ -84,5 +91,6 @@ export const actionCreators = {
   updateStocks,
   deleteTicker,
   displayMessage,
-  addNewStock
+  addNewStock,
+  hideMessage
 }

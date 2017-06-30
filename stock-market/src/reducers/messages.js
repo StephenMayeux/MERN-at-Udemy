@@ -1,16 +1,19 @@
 import {
-  DISPLAY_MESSAGE
+  DISPLAY_MESSAGE,
+  HIDE_MESSAGE
 } from '../actions'
 
 const INITIAL_STATE = {
-  error: ''
+  error: null
 }
 
 export default (state = INITIAL_STATE, action) => {
-  const { type, payload } = action
+  const { type, msg } = action
   switch (type) {
     case DISPLAY_MESSAGE:
-      return { error: payload }
+      return { error: msg }
+    case HIDE_MESSAGE:
+      return INITIAL_STATE
     default:
       return state
   }
