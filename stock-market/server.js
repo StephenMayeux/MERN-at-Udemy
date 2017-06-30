@@ -13,14 +13,14 @@ const server = http.createServer(app)
 const io = require('socket.io').listen(server)
 require('./socketRoutes')(io)
 
-app.use(express.static(path.join(__dirname, 'build')))
+app.use(express.static(path.join(__dirname, 'client', 'build')))
 app.use(logger('combined'))
 
 app.get('*', (req, res) => {
   res.sendFile(__dirname + '/index.html')
 })
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3001
 server.listen(port, () => {
   console.log('Express server listening on port', port)
 })

@@ -1,0 +1,10 @@
+.tickerCardWrapper {
+  margin: 25px 0;
+  padding: 10px;
+  border-left: 2px solid #5b5b5b;
+  background-color: #fff;
+}
+
+.close-icon {
+  cursor: pointer;
+}
