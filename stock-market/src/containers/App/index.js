@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Grid, Row, Col } from 'react-bootstrap'
+import { Grid, Row, Col, Modal } from 'react-bootstrap'
 import io from 'socket.io-client'
 import _ from 'lodash'
 
@@ -18,13 +18,29 @@ class App extends Component {
   constructor(props) {
     super(props)
 
+    this.state = {
+      errorModalIsDisplayed: false,
+      msg: ''
+    }
+
     this.handleDelete = this.handleDelete.bind(this)
+    this.displayErrorModal = this.displayErrorModal.bind(this)
+    this.hideErrorModal = this.hideErrorModal.bind(this)
   }
 
   componentDidMount() {
     socket.on('init', this.props.actions.updateStocks)
     socket.on('deleteStock', this.props.actions.deleteTicker)
     socket.on('newStock', this.props.actions.addNewStock)
+    socket.on('errorMessage', this.displayErrorModal)
+  }
+
+  displayErrorModal({ msg }) {
+    this.setState({ errorModalIsDisplayed: true, msg })
+  }
+
+  hideErrorModal() {
+    this.setState({ errorModalIsDisplayed: false, msg: '' })
   }
 
   handleDelete(ticker) {
@@ -60,6 +76,19 @@ class App extends Component {
     })
   }
 
+  renderErrorModal() {
+    return (
+      <Modal show={true} onHide={this.hideErrorModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Error Message</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h3>{this.state.msg || 'Whoops! Something went wrong!'}</h3>
+        </Modal.Body>
+      </Modal>
+    )
+  }
+
   render() {
     return (
       <Grid>
@@ -80,6 +109,9 @@ class App extends Component {
           </Col>
           {this.renderTickerCards()}
         </Row>
+        {this.state.errorModalIsDisplayed
+          ? this.renderErrorModal()
+          : null}
       </Grid>
     )
   }
