@@ -2,6 +2,12 @@ import {
   UPDATE_STOCKS
 } from '../actions'
 
+// uncomment with client-only dev server
+// import {
+//   chartData,
+//   tickers
+// } from '../lib/seed'
+
 const INITIAL_STATE = {
   chartData: [],
   tickers: []
