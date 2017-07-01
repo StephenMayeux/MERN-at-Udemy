@@ -1,8 +1,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router'
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import reduxThunk from 'redux-thunk';
+import { createLogger } from 'redux-logger';
 
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+import App from './containers/App';
+import LandingPage from './components/LandingPage'
+
+import reducers from './reducers';
+
+const logger = createLogger({ collapsed: true })
+
+const createStoreWithMiddleware = applyMiddleware(reduxThunk, logger)(createStore);
+const store = createStoreWithMiddleware(reducers,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+
+ReactDOM.render(
+  <Provider store={store}>
+    <Router history={browserHistory}>
+      <Route path="/" component={App}>
+        <IndexRoute component={LandingPage} />
+      </Route>
+    </Router>
+  </Provider>
+  , document.getElementById('root'));
