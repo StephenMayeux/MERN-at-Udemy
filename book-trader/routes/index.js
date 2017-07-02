@@ -14,4 +14,7 @@ router.get('/secret', requireAuth, (req, res) => {
   res.send({ secret: 'mayosammy' })
 })
 
+// Load Other Routes
+router.use('/books', require('./books'))
+
 module.exports = router
