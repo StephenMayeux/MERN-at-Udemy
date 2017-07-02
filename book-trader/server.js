@@ -1,7 +1,9 @@
+require('dotenv').config()
 const path = require('path')
 const http = require('http')
 const express = require('express')
 const logger = require('morgan')
+const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const app = express()
 
@@ -10,6 +12,10 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/book-trader')
 
 app.use(express.static(path.join(__dirname, 'client', 'build')))
 app.use(logger('combined'))
+app.use(bodyParser.json({ type: '*/*' }))
+
+const routes = require('./routes')
+app.use('/', routes)
 
 app.get('*', (req, res) => {
   res.sendFile(__dirname + '/index.html')
