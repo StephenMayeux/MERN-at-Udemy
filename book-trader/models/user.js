@@ -8,7 +8,8 @@ const userSchema = new Schema({
   password: String,
   name: { type: String, default: '' },
   city: { type: String, default: '' },
-  state: { type: String, default: '' }
+  state: { type: String, default: '' },
+  library: { type: Array, default: [] }
 }, { timestamps: true });
 
 // On Save Hook, encrypt password

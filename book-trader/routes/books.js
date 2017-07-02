@@ -2,7 +2,11 @@ const Books = require('../controllers/books')
 const express = require('express')
 const router = express.Router()
 
-router.get('/search/:book', Books.searchForBooks)
+const passport = require('passport')
+const requireAuth = passport.authenticate('jwt', { session: false })
+
+router.get('/search/:book', requireAuth, Books.searchForBooks)
+router.post('/add', requireAuth, Books.addBookToMyLibrary)
 
 /**
   1) Search for a list of books
