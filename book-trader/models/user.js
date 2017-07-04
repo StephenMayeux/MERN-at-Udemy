@@ -9,7 +9,10 @@ const userSchema = new Schema({
   name: { type: String, default: '' },
   city: { type: String, default: '' },
   state: { type: String, default: '' },
-  library: { type: Array, default: [] }
+  library: [{
+    book: { type: String, ref: 'book' },
+    requested_by: [{ type: String, ref: 'user' }]
+  }]
 }, { timestamps: true });
 
 // On Save Hook, encrypt password
