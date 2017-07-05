@@ -65,3 +65,11 @@ exports.removeBookFromMyLibrary = (req, res) => {
     res.send(user)
   })
 }
+
+exports.requestBook = (req, res) => {
+  const { user_id, book_id } = req.body
+  User.findOneAndUpdate({ _id: user_id, 'library._id': book_id }, { $push: { 'library.$.requested_by': req.user._id } }, { new: true }, (err, user) => {
+    if (err) return res.status(500).send({ success: false, err })
+    res.send({ success: true, user })
+  })
+}
