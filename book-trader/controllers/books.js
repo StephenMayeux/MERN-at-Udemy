@@ -1,5 +1,6 @@
 const fetch = require('isomorphic-fetch')
 const async = require('async')
+const _ = require('lodash')
 
 const User = require('../models/user')
 const Book = require('../models/book')
@@ -71,5 +72,38 @@ exports.requestBook = (req, res) => {
   User.findOneAndUpdate({ _id: user_id, 'library._id': book_id }, { $push: { 'library.$.requested_by': req.user._id } }, { new: true }, (err, user) => {
     if (err) return res.status(500).send({ success: false, err })
     res.send({ success: true, user })
+  })
+}
+
+exports.getMyRequests = (req, res) => {
+  async.waterfall([
+    (callback) => {
+      // Collect requests for my books by other users
+      User.findById(req.user._id).populate('library.book').populate('library.requested_by').lean().exec((err, requests) => {
+        if (err) return callback(err)
+        let { library } = requests
+        let filteredLibrary = library.filter(obj => obj.requested_by.length > 0)
+        callback(null, filteredLibrary)
+      })
+    },
+    (requests, callback) => {
+      // Now find the requests I have made to other people
+      User.find({ 'library.requested_by': { $in: [req.user._id] } }).populate('library.book').populate('library.requested_by').lean().exec((err, myRequests) => {
+        if (err) return callback(err)
+        const filtered = myRequests.reduce((acc, owner) => {
+          const { library } = owner
+          const filteredLibrary = library.filter(book => {
+            return book.requested_by.some(({ _id }) => _.isEqual(_id, req.user._id))
+          })
+          Object.assign(owner, { library: filteredLibrary })
+          acc.push(owner)
+          return acc
+        }, [])
+        callback(null, requests, filtered)
+      })
+    }
+  ], (err, requests, myRequests) => {
+    if (err) return res.status(500).send({ success: false, err })
+    res.send({ success: true, requests, myRequests })
   })
 }
