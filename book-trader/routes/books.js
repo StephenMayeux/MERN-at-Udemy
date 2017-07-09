@@ -11,7 +11,7 @@ router.get('/user/:id', requireAuth, Books.getUsersBooks)
 router.delete('/delete', requireAuth, Books.removeBookFromMyLibrary)
 router.post('/request', requireAuth, Books.requestBook)
 router.get('/request', requireAuth, Books.getMyRequests)
-router.post('/request', requireAuth, Books.respondToRequest)
+router.post('/respond', requireAuth, Books.respondToRequests)
 
 /**
   1) Search for a list of books
