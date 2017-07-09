@@ -107,3 +107,29 @@ exports.getMyRequests = (req, res) => {
     res.send({ success: true, requests, myRequests })
   })
 }
+
+exports.respondToRequest = (req, res) => {
+  res.send({ msg: 'butt sauce' })
+  // if (approved) {
+  //   User.findByIdAndUpdate(req.user._id, { $pull: { library: { _id: book._id } } }, { new: true }, (err, user) => {
+  //     if (err) return res.send({ success: false, err })
+  //     book.requested_by = []
+  //     User.findByIdAndUpdate(requester_id, { $push: { library: book } }, (err, requester) => {
+  //       if (err) return res.send({ success: false, err })
+  //       // send email
+  //       res.send({ success: true, user })
+  //     })
+  //   })
+  // }
+  // else {
+  //   User.findOneAndUpdate({ _id: req.user._id, 'library._id': book._id}, { $pull: { 'library.$.requested_by': requester_id } }, { new: true }, (err, user) => {
+  //     if (err) return res.send({ success: false, err })
+  //     // send email
+  //     res.send({ success: true, user })
+  //   })
+  // }
+}
+
+// const sendEmail = (user, msg) => {
+//
+// }

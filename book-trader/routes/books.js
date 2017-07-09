@@ -11,6 +11,7 @@ router.get('/user/:id', requireAuth, Books.getUsersBooks)
 router.delete('/delete', requireAuth, Books.removeBookFromMyLibrary)
 router.post('/request', requireAuth, Books.requestBook)
 router.get('/request', requireAuth, Books.getMyRequests)
+router.post('/request', requireAuth, Books.respondToRequest)
 
 /**
   1) Search for a list of books
@@ -19,8 +20,7 @@ router.get('/request', requireAuth, Books.getMyRequests)
   4) Delete a book from My Library
   5) Request a book from another user
   6) Get a list of: 1) pending requests I made, open requests others have sent me
-  7) Accept a request by another user
-  8) Reject a request by another user
+  7) Accept or reject a request by another user
 **/
 
 module.exports = router
