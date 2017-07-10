@@ -1,6 +1,12 @@
 const fetch = require('isomorphic-fetch')
 const async = require('async')
 const _ = require('lodash')
+const nodemailer = require('nodemailer')
+
+let transporter = nodemailer.createTransport({
+  sendmail: true,
+  path: '/usr/sbin/sendmail'
+})
 
 const User = require('../models/user')
 const Book = require('../models/book')
@@ -116,7 +122,7 @@ exports.respondToRequests = (req, res) => {
       const newBookObj = { book, _id, requested_by: [] }
       User.findByIdAndUpdate(requester_id, { $push: { library: newBookObj } }, (err, requester) => {
         if (err) return res.send({ success: false, err })
-        // send email
+        sendEmail(requester.email, 'Your request has been accepted!', 'Accepted!')
         res.send({ success: true, user })
       })
     })
@@ -124,12 +130,19 @@ exports.respondToRequests = (req, res) => {
   else {
     User.findOneAndUpdate({ _id: req.user._id, 'library._id': _id}, { $pull: { 'library.$.requested_by': requester_id } }, { new: true }, (err, user) => {
       if (err) return res.send({ success: false, err })
-      // send email
+      sendEmail(requester.email, 'Your request has been rejected!', 'Rejected!')
       res.send({ success: true, user })
     })
   }
 }
 
-// const sendEmail = (user, msg) => {
-//
-// }
+const sendEmail = (user, text, subject) => {
+  transporter.sendMail({
+    from: 'requests@booktrader.com',
+    to: 'stephenmayeux@gmail.com',
+    subject,
+    text
+  }, (err, info) => {
+    if (err) console.log(err)
+  })
+}
