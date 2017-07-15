@@ -1,12 +1,14 @@
 const fetch = require('isomorphic-fetch')
 const async = require('async')
 const _ = require('lodash')
-const nodemailer = require('nodemailer')
+const helper = require('sendgrid').mail
 
-let transporter = nodemailer.createTransport({
-  sendmail: true,
-  path: '/usr/sbin/sendmail'
-})
+const fromEmail = new helper.Email('info@booktrader')
+const acceptSubject = 'Your request was accepted'
+const rejectSubject = 'Your request was rejected'
+const acceptContent = 'Your book request was accepted and was added to your library!'
+const rejectContent = 'Your book request was rejected and has been removed. Request another book.'
+const sg = require('sendgrid')(process.env.SENDGRID_API_KEY)
 
 const User = require('../models/user')
 const Book = require('../models/book')
@@ -122,27 +124,26 @@ exports.respondToRequests = (req, res) => {
       const newBookObj = { book, _id, requested_by: [] }
       User.findByIdAndUpdate(requester_id, { $push: { library: newBookObj } }, (err, requester) => {
         if (err) return res.send({ success: false, err })
-        sendEmail(requester.email, 'Your request has been accepted!', 'Accepted!')
-        res.send({ success: true, user })
+        const toEmail = new helper.Email(requester.email)
+        const mail = new helper.Mail(fromEmail, acceptSubject, toEmail, acceptContent)
+        const request = sg.emptyRequest({ method: 'POST', path: '/v3/mail/send', body: mail.toJSON() })
+        sg.API(request, (err, respone) => {
+          if (err) return res.send({ success: false, err })
+          res.send({ success: true, user })
+        })
       })
     })
   }
   else {
     User.findOneAndUpdate({ _id: req.user._id, 'library._id': _id}, { $pull: { 'library.$.requested_by': requester_id } }, { new: true }, (err, user) => {
       if (err) return res.send({ success: false, err })
-      sendEmail(requester.email, 'Your request has been rejected!', 'Rejected!')
-      res.send({ success: true, user })
+      const toEmail = new helper.Email(user.email)
+      const mail = new helper.Mail(fromEmail, rejectSubject, toEmail, rejectContent)
+      const request = sg.emptyRequest({ method: 'POST', path: '/v3/mail/send', body: mail.toJSON() })
+      sg.API(request, (err, response) => {
+        if (err) return res.send({ success: false, err })
+        res.send({ success: true, user })
+      })
     })
   }
-}
-
-const sendEmail = (user, text, subject) => {
-  transporter.sendMail({
-    from: 'requests@booktrader.com',
-    to: 'stephenmayeux@gmail.com',
-    subject,
-    text
-  }, (err, info) => {
-    if (err) console.log(err)
-  })
 }
