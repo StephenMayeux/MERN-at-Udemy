@@ -10,11 +10,9 @@ const requireAuth = passport.authenticate('jwt', { session: false })
 
 router.post('/signin', requireSignin, Authentication.signin)
 router.post('/signup', Authentication.signup)
-router.get('/secret', requireAuth, (req, res) => {
-  res.send({ secret: 'mayosammy' })
-})
 
 // Load Other Routes
 router.use('/books', require('./books'))
+router.use('/user', require('./user'))
 
 module.exports = router
