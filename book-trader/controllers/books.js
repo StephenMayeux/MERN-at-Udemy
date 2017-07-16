@@ -1,9 +1,9 @@
 const fetch = require('isomorphic-fetch')
 const async = require('async')
 const _ = require('lodash')
-const helper = require('sendgrid').mail
 
-const fromEmail = new helper.Email('info@booktrader')
+const helper = require('sendgrid').mail
+const fromEmail = new helper.Email('info@booktrader.com')
 const acceptSubject = 'Your request was accepted'
 const rejectSubject = 'Your request was rejected'
 const acceptContent = 'Your book request was accepted and was added to your library!'
