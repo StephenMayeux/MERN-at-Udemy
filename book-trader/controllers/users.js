@@ -11,13 +11,8 @@ exports.signin = function(req, res, next) {
 }
 
 exports.signup = function(req, res, next) {
-  const name = req.body.name;
   const email = req.body.email;
   const password = req.body.password;
-
-  if (!email || !password) {
-    return res.status(422).send({ error: 'You must provide email and password'});
-  }
 
   User.findOne({ email: email }, function(err, existingUser) {
     if (err) { return next(err); }
@@ -26,18 +21,11 @@ exports.signup = function(req, res, next) {
       return res.status(422).send({ error: 'Email is in use' });
     }
 
-    const user = new User({
-      email: email,
-      password: password,
-      name: name,
-      city: '',
-      homepage: '',
-      avatar: ''
-    });
+    const user = new User({ email, password });
 
     user.save(function(err) {
       if (err) { return next(err); }
-      res.json({ token: tokenForUser(user), user: user });
+      res.json({ token: tokenForUser(user), user });
     });
   });
 }
