@@ -4,6 +4,13 @@ import { browserHistory } from 'react-router'
 
 const BASE_URL = 'http://localhost:3001'
 
+export const CLEAR_MESSAGES = 'CLEAR_MESSAGES'
+const clearMessages = () => {
+  return {
+    type: CLEAR_MESSAGES
+  }
+}
+
 export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS'
 export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE'
 const signUpUser = ({ email, password }) => {
@@ -36,5 +43,6 @@ const signUpUser = ({ email, password }) => {
 }
 
 export const actionCreators = {
-  signUpUser
+  signUpUser,
+  clearMessages
 }

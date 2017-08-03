@@ -11,6 +11,7 @@ export default class LandingPage extends Component {
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.clearMessages = this.clearMessages.bind(this)
   }
 
   handleChange(e) {
@@ -21,6 +22,10 @@ export default class LandingPage extends Component {
     e.preventDefault()
     const { email, password } = this.state
     this.props.actions.signUpUser({ email, password })
+  }
+
+  clearMessages(e) {
+    this.props.actions.clearMessages()
   }
 
   render() {
@@ -42,6 +47,7 @@ export default class LandingPage extends Component {
                       value={this.state.email}
                       name="email"
                       onChange={this.handleChange}
+                      onFocus={this.clearMessages}
                     />
                   </div>
                   <div className="form-group">
@@ -52,10 +58,17 @@ export default class LandingPage extends Component {
                       value={this.state.password}
                       name="password"
                       onChange={this.handleChange}
+                      onFocus={this.clearMessages}
                     />
                   </div>
                   <button type="submit" className="btn btn-primary btn-lg">Sign Up &raquo;</button>
                 </form>
+              </div>
+              <div className="col-xs-6">
+                {this.props.uiState.signUpFailure
+                  ? <p>{this.props.uiState.signUpFailure}</p>
+                  : null
+                }
               </div>
             </div>
           </div>
