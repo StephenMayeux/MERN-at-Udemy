@@ -31,7 +31,7 @@ const signUpUser = ({ email, password }) => {
         })
         localStorage.setItem('token', token)
         localStorage.setItem('user', JSON.stringify(sanitizedUser))
-        // browserHistory.push('/mybooks')
+        browserHistory.push('/mybooks')
       })
       .catch(err => {
         dispatch({
@@ -63,7 +63,7 @@ const signInUser = ({ email, password }) => {
         })
         localStorage.setItem('token', token)
         localStorage.setItem('user', JSON.stringify(sanitizedUser))
-        // browserHistory.push('/mybooks')
+        browserHistory.push('/mybooks')
       })
       .catch(err => {
         dispatch({

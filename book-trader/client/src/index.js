@@ -8,6 +8,7 @@ import { createLogger } from 'redux-logger';
 
 import App from './containers/App';
 import LandingPage from './components/LandingPage'
+import MyBooks from './components/MyBooks'
 
 import reducers from './reducers';
 
@@ -21,8 +22,15 @@ const { token, user } = localStorage
 if (token && user) {
   store.dispatch({
     type: 'SIGN_IN_SUCCESS',
-    payload: { token, user }
+    payload: { token, user: JSON.parse(user) }
   })
+}
+
+const handleAuth = (nextState, replace) => {
+  const { isLoggedIn } = store.getState().auth
+  if (!isLoggedIn) {
+    replace({ pathname: '/' })
+  }
 }
 
 ReactDOM.render(
@@ -30,6 +38,7 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Route path="/" component={App}>
         <IndexRoute component={LandingPage} />
+        <Route path="/mybooks" component={MyBooks} onEnter={handleAuth} />
       </Route>
     </Router>
   </Provider>
