@@ -4,7 +4,11 @@ import './style.css'
 export default class MyBooks extends Component {
   render() {
     return (
-      <h1>My Books</h1>
+      <div className="container">
+        <div className="row">
+          <h1>My Books</h1>
+        </div>
+      </div>
     )
   }
 }

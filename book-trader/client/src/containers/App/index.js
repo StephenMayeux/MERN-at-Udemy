@@ -16,6 +16,7 @@ class App extends Component {
           actions={actions}
           uiState={uiState}
           auth={auth}
+          pathname={this.props.location.pathname}
         />
         {childrenWithProps}
       </div>

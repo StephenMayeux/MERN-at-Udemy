@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router'
 import './style.css'
 
 
@@ -40,8 +41,54 @@ export default class Header extends Component {
     this.setState({ [e.target.name]: e.target.value })
   }
 
-  render() {
+  isActive(pathname) {
+    return this.props.pathname === pathname ? 'active' : ''
+  }
+
+  renderMainMenu() {
+    return (
+      <ul className="nav navbar-nav navbar-right">
+        <li className={this.isActive('/mybooks')}><Link to="mybooks">My Library</Link></li>
+        <li className={this.isActive('/addbooks')}><Link to="addbooks">Add Books</Link></li>
+        <li className={this.isActive('requests')}><Link to="requests">Make a Request</Link></li>
+        <li><a href="#">Log Out</a></li>
+      </ul>
+    )
+  }
+
+  renderSignIn() {
     const { email, password } = this.state
+    return (
+      <form onSubmit={this.handleSubmit} className="navbar-form navbar-right">
+        {this.displayErrors()}
+        <div className="form-group">
+          <input
+            value={email}
+            onChange={this.handleChange}
+            name="email"
+            type="text"
+            placeholder="Email"
+            className="form-control"
+            onFocus={this.hideErrors}
+          />
+        </div>
+        <div className="form-group">
+          <input
+            value={password}
+            onChange={this.handleChange}
+            name="password"
+            type="password"
+            placeholder="Password"
+            className="form-control"
+            onFocus={this.hideErrors}
+          />
+        </div>
+        <button type="submit" className="btn btn-success">Sign In</button>
+      </form>
+    )
+  }
+
+  render() {
     return (
       <nav className="navbar navbar-inverse navbar-fixed-top">
         <div className="container">
@@ -55,32 +102,7 @@ export default class Header extends Component {
             <a className="navbar-brand" href="#">Book Trader</a>
           </div>
           <div id="navbar" className="navbar-collapse collapse">
-            <form onSubmit={this.handleSubmit} className="navbar-form navbar-right">
-              {this.displayErrors()}
-              <div className="form-group">
-                <input
-                  value={email}
-                  onChange={this.handleChange}
-                  name="email"
-                  type="text"
-                  placeholder="Email"
-                  className="form-control"
-                  onFocus={this.hideErrors}
-                />
-              </div>
-              <div className="form-group">
-                <input
-                  value={password}
-                  onChange={this.handleChange}
-                  name="password"
-                  type="password"
-                  placeholder="Password"
-                  className="form-control"
-                  onFocus={this.hideErrors}
-                />
-              </div>
-              <button type="submit" className="btn btn-success">Sign In</button>
-            </form>
+            {this.props.auth.isLoggedIn ? this.renderMainMenu() : this.renderSignIn()}
           </div>
         </div>
       </nav>
