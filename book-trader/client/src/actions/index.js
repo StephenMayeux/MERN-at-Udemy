@@ -42,7 +42,40 @@ const signUpUser = ({ email, password }) => {
   }
 }
 
+export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS'
+export const SIGN_IN_FAILURE = 'SIGN_IN_FAILURE'
+const signInUser = ({ email, password }) => {
+  return (dispatch) => {
+    if (!email || !password) {
+      return dispatch({
+        type: SIGN_IN_FAILURE,
+        payload: 'You must complete all fields'
+      })
+    }
+
+    axios.post(`${BASE_URL}/signin`, { email, password })
+      .then(({ data }) => {
+        const { token, user } = data
+        const sanitizedUser = _.pick(user, ['name', 'state', 'city', 'email', '_id', 'library'])
+        dispatch({
+          type: SIGN_IN_SUCCESS,
+          payload: { token, user: sanitizedUser }
+        })
+        localStorage.setItem('token', token)
+        localStorage.setItem('user', JSON.stringify(sanitizedUser))
+        // browserHistory.push('/mybooks')
+      })
+      .catch(err => {
+        dispatch({
+          type: SIGN_IN_FAILURE,
+          payload: 'Password and/or email are invalid'
+        })
+      })
+  }
+}
+
 export const actionCreators = {
   signUpUser,
+  signInUser,
   clearMessages
 }

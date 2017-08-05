@@ -8,19 +8,23 @@ import Header from '../../components/Header'
 
 class App extends Component {
   render() {
-    const { actions, uiState } = this.props
+    const { actions, uiState, auth } = this.props
     const childrenWithProps = React.cloneElement(this.props.children, { actions, uiState })
     return (
       <div>
-        <Header />
+        <Header
+          actions={actions}
+          uiState={uiState}
+          auth={auth}
+        />
         {childrenWithProps}
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ uiState }) => {
-  return { uiState }
+const mapStateToProps = ({ uiState, auth }) => {
+  return { uiState, auth }
 }
 
 const mapDispatchToProps = (dispatch) => {
