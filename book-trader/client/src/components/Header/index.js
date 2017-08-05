@@ -13,6 +13,20 @@ export default class Header extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.hideErrors = this.hideErrors.bind(this)
+  }
+
+  displayErrors() {
+    if (!this.props.uiState.signInFailure) return null
+    return (
+      <span className="error">
+        {this.props.uiState.signInFailure}
+      </span>
+    )
+  }
+
+  hideErrors() {
+    this.props.actions.clearMessages()
   }
 
   handleSubmit(e) {
@@ -42,6 +56,7 @@ export default class Header extends Component {
           </div>
           <div id="navbar" className="navbar-collapse collapse">
             <form onSubmit={this.handleSubmit} className="navbar-form navbar-right">
+              {this.displayErrors()}
               <div className="form-group">
                 <input
                   value={email}
@@ -50,6 +65,7 @@ export default class Header extends Component {
                   type="text"
                   placeholder="Email"
                   className="form-control"
+                  onFocus={this.hideErrors}
                 />
               </div>
               <div className="form-group">
@@ -60,6 +76,7 @@ export default class Header extends Component {
                   type="password"
                   placeholder="Password"
                   className="form-control"
+                  onFocus={this.hideErrors}
                 />
               </div>
               <button type="submit" className="btn btn-success">Sign In</button>
