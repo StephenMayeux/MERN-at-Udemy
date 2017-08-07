@@ -24,7 +24,7 @@ const signUpUser = ({ email, password }) => {
     axios.post(`${BASE_URL}/signup`, { email, password })
       .then(({ data }) => {
         const { token, user } = data
-        const sanitizedUser = _.pick(user, ['name', 'state', 'city', 'email', '_id', 'library'])
+        const sanitizedUser = _.pick(user, ['name', 'state', 'city', 'email', '_id'])
         dispatch({
           type: SIGN_UP_SUCCESS,
           payload: { token, user: sanitizedUser }
@@ -56,7 +56,7 @@ const signInUser = ({ email, password }) => {
     axios.post(`${BASE_URL}/signin`, { email, password })
       .then(({ data }) => {
         const { token, user } = data
-        const sanitizedUser = _.pick(user, ['name', 'state', 'city', 'email', '_id', 'library'])
+        const sanitizedUser = _.pick(user, ['name', 'state', 'city', 'email', '_id'])
         dispatch({
           type: SIGN_IN_SUCCESS,
           payload: { token, user: sanitizedUser }
@@ -74,8 +74,24 @@ const signInUser = ({ email, password }) => {
   }
 }
 
+export const FETCH_USER_BOOKS = 'FETCH_USER_BOOKS'
+const fetchUserBooks = (userId) => {
+  return (dispatch, getState) => {
+    const config = { headers: { 'Authorization': getState().auth.token } }
+    axios.get(`${BASE_URL}/books/user/${userId}`, config)
+      .then(({ data }) => {
+        const { library } = data.user
+        dispatch({
+          type:  FETCH_USER_BOOKS,
+          payload: library
+        })
+      })
+  }
+}
+
 export const actionCreators = {
   signUpUser,
   signInUser,
-  clearMessages
+  clearMessages,
+  fetchUserBooks
 }
