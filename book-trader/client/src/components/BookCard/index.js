@@ -25,7 +25,8 @@ const renderAuthors = (authors) => {
   }, '')
 }
 
-const renderButtons = ({ requested_by, areMyBooks }) => {
+const renderButtons = (props) => {
+  const { requested_by, areMyBooks, actions, _id } = props
   if (areMyBooks) {
     let label = requested_by.length.toString()
     label += requested_by.length === 1 ? ' Request' : ' Requests'
@@ -34,7 +35,13 @@ const renderButtons = ({ requested_by, areMyBooks }) => {
         <Link to="requests">
           <Button bsStyle="primary">{label}</Button>
         </Link>
-        <Button bsStyle="danger" className="pull-right">Delete</Button>
+        <Button
+          bsStyle="danger"
+          className="pull-right"
+          onClick={() => actions.deleteBook(_id)}
+        >
+          Delete
+        </Button>
       </div>
     )
   }
@@ -47,7 +54,7 @@ const BarCard = (props) => {
       <Thumbnail src={thumbnail}>
         <h3>{_.truncate(title, { length: 25 })}</h3>
         {renderAuthors(authors)}
-        {renderButtons({ requested_by, areMyBooks })}
+        {renderButtons(props)}
       </Thumbnail>
     </Col>
   )

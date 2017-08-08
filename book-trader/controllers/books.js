@@ -70,7 +70,7 @@ exports.getUsersBooks = (req, res) => {
 }
 
 exports.removeBookFromMyLibrary = (req, res) => {
-  User.findByIdAndUpdate(req.user._id, { $pull: { library: { book: req.body.id } } }, { new: true }, (err, user) => {
+  User.findByIdAndUpdate(req.user._id, { $pull: { library: { _id: req.query.id } } }, { new: true }).populate('library.book').populate('library.requested_by').exec((err, user) => {
     res.send(user)
   })
 }

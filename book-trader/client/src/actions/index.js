@@ -89,9 +89,28 @@ const fetchUserBooks = (userId) => {
   }
 }
 
+const deleteBook = (id) => {
+  return (dispatch, getState) => {
+    const config = {
+      headers: { 'Authorization': getState().auth.token },
+      params: { id }
+    }
+    axios.delete(`${BASE_URL}/books/delete`, config)
+      .then(({ data }) => {
+        const { library } = data
+        console.log('the library', library)
+        dispatch({
+          type: FETCH_USER_BOOKS,
+          payload: library
+        })
+      })
+  }
+}
+
 export const actionCreators = {
   signUpUser,
   signInUser,
   clearMessages,
-  fetchUserBooks
+  fetchUserBooks,
+  deleteBook
 }
