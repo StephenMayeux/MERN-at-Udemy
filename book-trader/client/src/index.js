@@ -33,11 +33,18 @@ const handleAuth = (nextState, replace) => {
   }
 }
 
+const handleRedirect = (nextState, replace) => {
+  const { isLoggedIn } = store.getState().auth
+  if (isLoggedIn && nextState.location.pathname === '/') {
+    replace({ pathname: '/mybooks' })
+  }
+}
+
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={App}>
-        <IndexRoute component={LandingPage} />
+        <IndexRoute component={LandingPage} onEnter={handleRedirect} />
         <Route path="/mybooks" component={MyBooks} onEnter={handleAuth} />
       </Route>
     </Router>
