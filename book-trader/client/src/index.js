@@ -9,6 +9,7 @@ import { createLogger } from 'redux-logger';
 import App from './containers/App';
 import LandingPage from './components/LandingPage'
 import MyBooks from './components/MyBooks'
+import AddBooks from './components/AddBooks'
 
 import reducers from './reducers';
 
@@ -46,6 +47,7 @@ ReactDOM.render(
       <Route path="/" component={App}>
         <IndexRoute component={LandingPage} onEnter={handleRedirect} />
         <Route path="/mybooks" component={MyBooks} onEnter={handleAuth} />
+        <Route path="/addbooks" component={AddBooks} onEnter={handleAuth} />
       </Route>
     </Router>
   </Provider>

@@ -17,10 +17,6 @@ import BookCard from '../BookCard'
 export default class MyBooks extends Component {
   constructor(props) {
     super(props)
-
-    this.state = {
-      books: null
-    }
   }
 
   componentWillMount() {

@@ -107,10 +107,25 @@ const deleteBook = (id) => {
   }
 }
 
+const searchForBooks = (searchTerm) => {
+  return (dispatch, getState) => {
+    const config = { headers: { 'Authorization': getState().auth.token } }
+    axios.get(`${BASE_URL}/books/search/${searchTerm}`, config)
+      .then(({ data }) => {
+        console.log(data)
+        dispatch({ type: 'test' })
+      })
+      .catch(error => {
+        console.error(error)
+      })
+  }
+}
+
 export const actionCreators = {
   signUpUser,
   signInUser,
   clearMessages,
   fetchUserBooks,
-  deleteBook
+  deleteBook,
+  searchForBooks
 }
