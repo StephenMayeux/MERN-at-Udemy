@@ -50,7 +50,7 @@ export default class Header extends Component {
       <ul className="nav navbar-nav navbar-right">
         <li className={this.isActive('/mybooks')}><Link to="mybooks">My Library</Link></li>
         <li className={this.isActive('/addbooks')}><Link to="addbooks">Add Books</Link></li>
-        <li className={this.isActive('requests')}><Link to="requests">Make a Request</Link></li>
+        <li className={this.isActive('/requests')}><Link to="requests">Make a Request</Link></li>
         <li><a href="#">Log Out</a></li>
       </ul>
     )
