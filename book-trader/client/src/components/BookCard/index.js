@@ -12,7 +12,7 @@ import _ from 'lodash'
 import './style.css'
 
 const renderAuthors = (authors) => {
-  if (authors.length === 0) return null
+  if (_.isEmpty(authors)) return null
   return authors.reduce((acc, author, i, a) => {
     acc += author
     if (a.length === 2 && i === 0) {
@@ -47,7 +47,7 @@ const renderButtons = (props) => {
   }
 }
 
-const BarCard = (props) => {
+const BookCard = (props) => {
   const { book: { authors, thumbnail, title }, requested_by, _id, areMyBooks } = props
   return (
     <Col xs={4}>
@@ -60,4 +60,4 @@ const BarCard = (props) => {
   )
 }
 
-export default BarCard
+export default BookCard

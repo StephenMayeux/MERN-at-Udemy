@@ -25,13 +25,13 @@ export default class MyBooks extends Component {
   }
 
   renderBooks() {
-    const { books, actions } = this.props
-    if (_.isEmpty(books)) {
+    const { books: { userBooks }, actions } = this.props
+    if (_.isEmpty(userBooks)) {
       return (
         <p>You do not have any books yet!</p>
       )
     }
-    return _.map(books, (book, i) => {
+    return _.map(userBooks, (book, i) => {
       return (
         <div key={book._id}>
           <BookCard

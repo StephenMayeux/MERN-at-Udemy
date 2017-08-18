@@ -98,7 +98,6 @@ const deleteBook = (id) => {
     axios.delete(`${BASE_URL}/books/delete`, config)
       .then(({ data }) => {
         const { library } = data
-        console.log('the library', library)
         dispatch({
           type: FETCH_USER_BOOKS,
           payload: library
@@ -107,13 +106,31 @@ const deleteBook = (id) => {
   }
 }
 
+export const SEARCH_BOOKS = 'SEARCH_BOOKS'
 const searchForBooks = (searchTerm) => {
   return (dispatch, getState) => {
     const config = { headers: { 'Authorization': getState().auth.token } }
     axios.get(`${BASE_URL}/books/search/${searchTerm}`, config)
       .then(({ data }) => {
-        console.log(data)
-        dispatch({ type: 'test' })
+        dispatch({
+          type: SEARCH_BOOKS,
+          payload: data.books
+        })
+      })
+      .catch(error => {
+        console.error(error)
+      })
+  }
+}
+
+export const ADD_BOOK = 'ADD_BOOK'
+const addBook = ({ _id, title, subtitle, authors, thumbnail }) => {
+  return (dispatch, getState) => {
+    const config = { headers: { 'Authorization': getState().auth.token } }
+    const body = { _id, title, subtitle, authors, thumbnail }
+    axios.post(`${BASE_URL}/books/add`, body, config)
+      .then(({ data }) => {
+        console.log('you clicked the button')
       })
       .catch(error => {
         console.error(error)
@@ -127,5 +144,6 @@ export const actionCreators = {
   clearMessages,
   fetchUserBooks,
   deleteBook,
-  searchForBooks
+  searchForBooks,
+  addBook
 }

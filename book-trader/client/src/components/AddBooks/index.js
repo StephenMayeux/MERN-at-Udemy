@@ -14,7 +14,7 @@ import _ from 'lodash'
 
 import './style.css'
 
-import BookCard from '../BookCard'
+import SearchResult from '../SearchResult'
 
 export default class AddBooks extends Component {
   constructor(props) {
@@ -39,19 +39,14 @@ export default class AddBooks extends Component {
   }
 
   renderBooks() {
-    const { books, actions } = this.props
-    if (_.isEmpty(books)) {
-      return (
-        <p style={{ marginRight: 15 }}>Your search came up empty.</p>
-      )
-    }
-    return _.map(books, (book, i) => {
+    const { books: { searchBooks }, actions } = this.props
+    if (_.isEmpty(searchBooks)) return null
+    return _.map(searchBooks, (book, i) => {
       return (
         <div key={book._id}>
-          <BookCard
+          <SearchResult
             {...book}
             actions={actions}
-            areMyBooks={true}
           />
           {(i + 1) % 3 === 0
             ? <div className="clearfix visible-lg-block visible-md-block"></div>
@@ -84,6 +79,7 @@ export default class AddBooks extends Component {
           </Col>
         </Row>
         <Row>
+          {this.renderBooks()}
         </Row>
       </Grid>
     )
