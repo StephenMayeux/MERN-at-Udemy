@@ -51,8 +51,9 @@ exports.addBookToMyLibrary = (req, res) => {
     },
     (book, callback) => {
       const newBookObj = { book: book._id, requested_by: [] }
-      User.findByIdAndUpdate(req.user._id, { $push: { library: newBookObj } }, { new: true }, (err, user) => {
+      User.findByIdAndUpdate(req.user._id, { $push: { library: newBookObj } }, { new: true }).populate('library.book').populate('library.requested_by').exec((err, user) => {
         if (err) return callback(err)
+        // TODO: only send properties from user object that we care about
         callback(null, user)
       })
     }

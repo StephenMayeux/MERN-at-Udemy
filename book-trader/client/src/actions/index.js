@@ -130,7 +130,12 @@ const addBook = ({ _id, title, subtitle, authors, thumbnail }) => {
     const body = { _id, title, subtitle, authors, thumbnail }
     axios.post(`${BASE_URL}/books/add`, body, config)
       .then(({ data }) => {
-        console.log('you clicked the button')
+        const { user: { library } } = data
+        dispatch({
+          type: ADD_BOOK,
+          payload: library,
+          _id: _id
+        })
       })
       .catch(error => {
         console.error(error)

@@ -43,7 +43,7 @@ export default class AddBooks extends Component {
     if (_.isEmpty(searchBooks)) return null
     return _.map(searchBooks, (book, i) => {
       return (
-        <div key={book._id}>
+        <div key={i}>
           <SearchResult
             {...book}
             actions={actions}

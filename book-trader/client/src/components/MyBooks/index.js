@@ -21,7 +21,9 @@ export default class MyBooks extends Component {
 
   componentWillMount() {
     const { _id } = this.props.auth.user
-    this.props.actions.fetchUserBooks(_id)
+    if (this.props.books.userBooksLoaded === false) {
+      this.props.actions.fetchUserBooks(_id)
+    }
   }
 
   renderBooks() {

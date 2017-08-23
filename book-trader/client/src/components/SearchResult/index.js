@@ -26,10 +26,18 @@ const renderAuthors = (authors) => {
 }
 
 const renderAddButton = (props) => {
-  let { _id, title, subtitle, authors, thumbnail } = props
+  let { _id, title, subtitle, authors, thumbnail, added } = props
   thumbnail = thumbnail ? thumbnail : ''
-  return null
-  // props.actions.addBook({ _id, title, subtitle, authors, thumbnail })
+  return (
+    <Button
+      block
+      bsStyle="primary"
+      onClick={props.actions.addBook.bind(this, { _id, title, subtitle, authors, thumbnail })}
+      disabled={added}
+    >
+      Add
+    </Button>
+  )
 }
 
 const SearchResult = (props) => {
@@ -38,8 +46,8 @@ const SearchResult = (props) => {
     <Col xs={4}>
       <Thumbnail src={thumbnail}>
         <h3>{_.truncate(title, { length: 25 })}</h3>
-        {renderAuthors(authors)}
-        {renderAddButton(props)}
+        <div>{renderAuthors(authors)}</div>
+        <div>{renderAddButton(props)}</div>
       </Thumbnail>
     </Col>
   )
