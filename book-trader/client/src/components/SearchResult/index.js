@@ -2,11 +2,8 @@ import React from 'react'
 import {
   Thumbnail,
   Button,
-  Col,
-  Label,
-  Glyphicon
+  Col
 } from 'react-bootstrap'
-import { Link } from 'react-router'
 import _ from 'lodash'
 
 import './style.css'

@@ -2,11 +2,7 @@ import React, { Component } from 'react'
 import {
   Grid,
   Row,
-  Col,
-  Thumbnail,
-  Button,
-  Label,
-  Glyphicon
+  Col
 } from 'react-bootstrap'
 import _ from 'lodash'
 
@@ -15,10 +11,6 @@ import './style.css'
 import BookCard from '../BookCard'
 
 export default class MyBooks extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   componentWillMount() {
     const { _id } = this.props.auth.user
     if (this.props.books.userBooksLoaded === false) {

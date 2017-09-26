@@ -51,7 +51,7 @@ export default class Header extends Component {
         <li className={this.isActive('/mybooks')}><Link to="mybooks">My Library</Link></li>
         <li className={this.isActive('/addbooks')}><Link to="addbooks">Add Books</Link></li>
         <li className={this.isActive('/requests')}><Link to="requests">Make a Request</Link></li>
-        <li><a href="#">Log Out</a></li>
+        <li><a href="/">Log Out</a></li>
       </ul>
     )
   }
@@ -99,7 +99,7 @@ export default class Header extends Component {
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <a className="navbar-brand" href="#">Book Trader</a>
+            <a className="navbar-brand" href="/">Book Trader</a>
           </div>
           <div id="navbar" className="navbar-collapse collapse">
             {this.props.auth.isLoggedIn ? this.renderMainMenu() : this.renderSignIn()}

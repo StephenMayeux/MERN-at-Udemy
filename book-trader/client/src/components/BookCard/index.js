@@ -2,9 +2,7 @@ import React from 'react'
 import {
   Thumbnail,
   Button,
-  Col,
-  Label,
-  Glyphicon
+  Col
 } from 'react-bootstrap'
 import { Link } from 'react-router'
 import _ from 'lodash'
@@ -29,7 +27,7 @@ const renderButtons = (props) => {
   const { requested_by, areMyBooks, actions, _id } = props
   if (areMyBooks) {
     let label = requested_by.length.toString()
-    label += requested_by.length === 1 ? ' Request' : ' Requests'
+      label += requested_by.length === 1 ? ' Request' : ' Requests'
     return (
       <div>
         <Link to="requests">

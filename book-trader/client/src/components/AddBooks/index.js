@@ -5,10 +5,7 @@ import {
   Col,
   Form,
   FormControl,
-  Thumbnail,
-  Button,
-  Label,
-  Glyphicon
+  Button
 } from 'react-bootstrap'
 import _ from 'lodash'
 
